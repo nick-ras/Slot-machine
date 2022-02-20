@@ -13,23 +13,23 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             var randWord = new Random(listOfSlotSymbols.Count);
             string[,] pullHandle2D = new string[3, 3];
-            
 
+            pullHandle2D[2,2] = "cherry";
+            Console.WriteLine(pullHandle2D[2,2]);
+            Console.WriteLine(listOfSlotSymbols.Count + "\n\n");
             // i checked that pullHandle had different random generated values than nineRandomSlotSymbols 
 
 
 
-            for (int i = 0; i < pullHandle2D.Length; i++)
+            for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    pullHandle2D[i, j] = listOfSlotSymbols[randWord.Next()];
+                    pullHandle2D[i, j] = listOfSlotSymbols[randWord.Next(0, 9)];
+                    Console.WriteLine(pullHandle2D[i, j]);
                 }
-                
-                
-
             }
-            Console.WriteLine(pullHandle2D);
+            
             /*
             for (int i = 0; i < pullHandle.Length; i++)
             {
