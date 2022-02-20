@@ -35,6 +35,17 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     }
                     Console.WriteLine("");
                 }
+
+                Console.WriteLine("This is the output\nDo you wish to play again");
+                string answer = Convert.ToString(Console.ReadLine());
+                if (answer == "y")
+                {
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
             }
             
            
