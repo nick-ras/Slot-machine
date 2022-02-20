@@ -13,14 +13,19 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             var randWord = new Random(listOfSlotSymbols.Count);
             string[] nineRandomSlotSymbols = new string[9];
-           
+
             for (int i = 0; i < nineRandomSlotSymbols.Length; i++)
             {
                 nineRandomSlotSymbols[i] = listOfSlotSymbols[randWord.Next(listOfSlotSymbols.Count)];
-                Console.WriteLine(nineRandomSlotSymbols[i]);
-                if (i > 0 && 3%i==0)
+
+            }
+
+            for (int i = 0; i < nineRandomSlotSymbols.Length; i++)
+            {
+                Console.Write($"{nineRandomSlotSymbols[i]}  ");
+                if (i > 0 && (i+1)%3==0)
                 {
-                    Console.WriteLine("\n");
+                    Console.WriteLine("");
                 }
 
             }
