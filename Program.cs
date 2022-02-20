@@ -12,26 +12,38 @@ namespace MyApp // Note: actual namespace depends on the project name.
             List<string> listOfSlotSymbols = new List<string>() {"cherrie", "grape", "orange", "melon", "lemons", "Aces", "King", "Queen", "Jack"};
 
             var randWord = new Random(listOfSlotSymbols.Count);
-            string[] nineRandomSlotSymbols = new string[9];
+            string[,] pullHandle2D = new string[3, 3];
+            
 
-            for (int i = 0; i < nineRandomSlotSymbols.Length; i++)
+            // i checked that pullHandle had different random generated values than nineRandomSlotSymbols 
+
+
+
+            for (int i = 0; i < pullHandle2D.Length; i++)
             {
-                nineRandomSlotSymbols[i] = listOfSlotSymbols[randWord.Next(listOfSlotSymbols.Count)];
+                for (int j = 0; j < 3; j++)
+                {
+                    pullHandle2D[i, j] = listOfSlotSymbols[randWord.Next()];
+                }
+                
+                
 
             }
-
-            for (int i = 0; i < nineRandomSlotSymbols.Length; i++)
+            Console.WriteLine(pullHandle2D);
+            /*
+            for (int i = 0; i < pullHandle.Length; i++)
             {
-                Console.Write($"{nineRandomSlotSymbols[i]}  ");
+                Console.Write($"{pullHandle[i]}  ");
                 if (i > 0 && (i+1)%3==0)
                 {
                     Console.WriteLine("");
                 }
 
-            }
-            
-            //listOfSlotSymbols[randomIndex]
-            //Console.WriteLine($"{nextSlotSymbols} {nextSlotSymbols} {nextSlotSymbols} \n  {nextSlotSymbols} {nextSlotSymbols} {nextSlotSymbols} \n  {nextSlotSymbols} {nextSlotSymbols} {nextSlotSymbols}");
+            }*/
+
+           
+
+
         }
     }
 }
