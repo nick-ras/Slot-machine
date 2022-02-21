@@ -10,13 +10,12 @@ namespace MyApp // Note: actual namespace depends on the project name.
         static void Main(string[] args)
         {
 
-            int moneyAvailable;
+            float moneyAvailable;
             
-            Console.WriteLine("Welcome to the game\nHow much do you want to play for? Enter an integer");
+            Console.WriteLine("Welcome to the game\nHow much do you want to play for? Enter an number, and use comma if you want to enter cents");
             // TO DO function crashes if user enter a non-integer, so maybe use a catch error method
             // TO DO: dont except numbers < 1
-            //TO DO potentially accept 2 decimals
-            moneyAvailable = Convert.ToInt32(Console.ReadLine());
+            moneyAvailable = Convert.ToSingle(Console.ReadLine()); 
 
             bool continueToPlay = true;
 
@@ -24,7 +23,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
             {
                 Console.WriteLine("Press any key to pull the handle");
                 // CHANGE THIS 
-                Console.ReadKey();
+                Console.ReadLine();
+                
 
                 List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange", "melon", "lemons", "aces", "king", "queen", "jack" };
 
@@ -42,7 +42,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     Console.WriteLine("");
                 }
 
-                Console.WriteLine($"You have {moneyAvailable} $. Press <Enter> to continue, otherwise you will cash out");
+                Console.WriteLine($"You have {moneyAvailable:0.##} $. Press <Enter> to continue, otherwise you will cash out");
                 
                 var playAgain = Console.ReadKey();
                 if (playAgain.Key != ConsoleKey.Enter)
