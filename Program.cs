@@ -13,16 +13,16 @@ namespace MyApp // Note: actual namespace depends on the project name.
             int moneyAvailable;
             
             Console.WriteLine("Welcome to the game\nHow much do you want to play for? Enter an integer");
-            // function crashes if user enter a non-integer
-            // TODO: dont except numbers < 1
-            //TODO potentially accept 2 decimals
+            // TO DO function crashes if user enter a non-integer, so maybe use a catch error method
+            // TO DO: dont except numbers < 1
+            //TO DO potentially accept 2 decimals
             moneyAvailable = Convert.ToInt32(Console.ReadLine());
 
             bool continueToPlay = true;
 
             while (continueToPlay)
             {
-                Console.WriteLine("Press any key to pull handle");
+                Console.WriteLine("Press any key to pull the handle");
 
                 Console.ReadLine();
 
@@ -42,13 +42,12 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     Console.WriteLine("");
                 }
 
-                Console.WriteLine($"You have {moneyAvailable} $. Press \"y\" if you wish to play again. Otherwise you will cash out.");
-                string answer = Console.ReadLine();
-                if (answer != "y")
+                Console.WriteLine($"You have {moneyAvailable} $. Press <Enter> to continue, otherwise you will cash out");
+                
+                while (Console.ReadKey().Key != ConsoleKey.Enter)
                 {
                     continueToPlay = false;
                 }
-
             }
         }
     }
