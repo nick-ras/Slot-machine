@@ -44,7 +44,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                 Console.WriteLine($"You have {moneyAvailable} $. Press <Enter> to continue, otherwise you will cash out");
                 
-                while (Console.ReadKey().Key != ConsoleKey.Enter)
+                var playAgain = Console.ReadKey();
+                if (playAgain.Key != ConsoleKey.Enter)
+
                 {
                     continueToPlay = false;
                 }
