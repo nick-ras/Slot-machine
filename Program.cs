@@ -23,8 +23,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
             while (continueToPlay)
             {
                 Console.WriteLine("Press any key to pull the handle");
-
-                Console.ReadLine();
+                // CHANGE THIS 
+                Console.ReadKey();
 
                 List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange", "melon", "lemons", "aces", "king", "queen", "jack" };
 
