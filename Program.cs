@@ -21,8 +21,18 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             while (continueToPlay)
             {
-                Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
-                int bettingStyle = Convert.ToInt32(Console.ReadLine());
+                // Make try statement avaliable outside try statement
+                int bettingStyle = -1;
+                try
+                {
+                    Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
+                    bettingStyle = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
                
                 Console.WriteLine("Press any key to pull the handle");
                 Console.ReadLine();
