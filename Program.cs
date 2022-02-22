@@ -44,23 +44,34 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 // ------WINNINGS?? NOT WORKING NECESSARILY!
                 foreach (string symbol in listOfSlotSymbols)
                 {
-                    for (int i = 0; i < outcomePullHandle2D.GetLength(1); i++)
+                    //It need to go through all columns one row at a time. The condition of second loop makes sure it only loops as
+                    //long as there are columns, and then goes to next row. The conditino of first loop makes sure it only loops as
+                    //long as there are rows.
+                    for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
                     {
+                        int amountOfFullRows = 0;
                         int counter = 0;
-                        for(int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
+
+                        for (int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
                         {
                             if (outcomePullHandle2D[i,j] == symbol)
                             {
                                 counter += 1;
+                                
                             }
                             if (counter == 3)
                             {
                                 //if "symbol" matches all the horisontal rows (outcomePullHandle2D[i,0] + [i,1] + [i,2])
                                 // It goes through every column in first row, and if they all match symbol, then it prints below message
-                                Console.WriteLine("You have a row");
+                                amountOfFullRows += 1;
+                                
                             }
-
+                            if (amountOfFullRows > 0)
+                            {
+                                Console.WriteLine($"You have {amountOfFullRows} rows!");
+                            }
                         }
+                        
                         
 
                     }
