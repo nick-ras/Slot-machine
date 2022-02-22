@@ -35,12 +35,38 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 {
                     for (int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
                     {
-                        // changed Next(listOfSlotSymbols.Count)] to Next(2)] order to test method
-                        outcomePullHandle2D[i, j] = listOfSlotSymbols[randWord.Next(listOfSlotSymbols.Count)];
+                        // !!!!!!!!changed Next(listOfSlotSymbols.Count)] to Next(2)] order to test method
+                        outcomePullHandle2D[i, j] = listOfSlotSymbols[randWord.Next(2)];
                         Console.Write(outcomePullHandle2D[i, j] + "  ");
                     }
                     Console.WriteLine("");
                 }
+                // ------WINNINGS?? NOT WORKING NECESSARILY!
+                foreach (string symbol in listOfSlotSymbols)
+                {
+                    for (int i = 0; i < outcomePullHandle2D.GetLength(1); i++)
+                    {
+                        int counter = 0;
+                        for(int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
+                        {
+                            if (outcomePullHandle2D[i,j] == symbol)
+                            {
+                                counter += 1;
+                            }
+                            if (counter == 3)
+                            {
+                                //if "symbol" matches all the horisontal rows (outcomePullHandle2D[i,0] + [i,1] + [i,2])
+                                // It goes through every column in first row, and if they all match symbol, then it prints below message
+                                Console.WriteLine("You have a row");
+                            }
+
+                        }
+                        
+
+                    }
+                }
+                
+
 
                 Console.WriteLine($"You have {moneyAvailable:0.##} $. Press <Enter> to continue, otherwise you will cash out");
                 
