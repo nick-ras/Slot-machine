@@ -21,11 +21,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             while (continueToPlay)
             {
-
                 Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
                 int bettingStyle = Convert.ToInt32(Console.ReadLine());
-                
-                
+               
                 Console.WriteLine("Press any key to pull the handle");
                 Console.ReadLine();
 
@@ -107,6 +105,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     moneyAvailable -= 4;
                 }
 
+                //TO DO: Make it only mention the relevant rows
                 Console.WriteLine($"You have {horizontalRows} horizontal rows and {verticalRows} vertical rows! and {diagonalRows} diagonal rows!");
 
                 if (moneyAvailable <= 0)
@@ -114,6 +113,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     continueToPlay = false;
                     continue;
                 }
+
                 Console.WriteLine($"You have {moneyAvailable:0.##} $. Press <Enter> to continue, otherwise you will cash out");
                 
                 var playAgain = Console.ReadKey();
