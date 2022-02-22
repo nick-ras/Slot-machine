@@ -50,20 +50,21 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 {
                     for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
                     {
-                        // checks horizontally
-                        if (symbol == outcomePullHandle2D[0, i] && symbol == outcomePullHandle2D[1, i] && symbol == outcomePullHandle2D[2, i])
-                        {
-                            //check vertical rows and adds 9 dollars to moneyAvailable
-                            verticalRows += 1;
-                            moneyAvailable += 9;
-                        }
-                        //Checks vertically
+                        //Checks horizontal rows
                         if (symbol == outcomePullHandle2D[i, 0] && symbol == outcomePullHandle2D[i, 1] && symbol == outcomePullHandle2D[i, 2])
                         {
-                            //check vertical rows and adds 9 dollars to moneyAvailable
+                            //adds 9 dollars to moneyAvailable if true
                             horizontalRows += 1;
                             moneyAvailable += 9;
                         }
+                        // checks vertical rows
+                        if (symbol == outcomePullHandle2D[0, i] && symbol == outcomePullHandle2D[1, i] && symbol == outcomePullHandle2D[2, i])
+                        {
+                            //adds 9 dollars to moneyAvailable if true 
+                            verticalRows += 1;
+                            moneyAvailable += 9;
+                        }
+                        
                         
 
                     }
