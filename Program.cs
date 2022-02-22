@@ -10,12 +10,12 @@ namespace MyApp // Note: actual namespace depends on the project name.
         static void Main(string[] args)
         {
 
-            float moneyAvailable;
+            double moneyAvailable;
             
             Console.WriteLine("Welcome to the game\nHow many dollars do you want to play for? Use comma if you want to enter cents");
             // TO DO function crashes if user enter a non-integer, so maybe use a catch error method
             // TO DO: dont except numbers < 1
-            moneyAvailable = Convert.ToSingle(Console.ReadLine()); 
+            moneyAvailable = Convert.ToDouble(Console.ReadLine()); 
 
             bool continueToPlay = true;
 
@@ -55,6 +55,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     if (symbol == outcomePullHandle2D[1, 0] && symbol == outcomePullHandle2D[1, 1] && symbol == outcomePullHandle2D[1, 2] && bettingStyle == 0)
                     {
                         centerRow += 1;
+                        moneyAvailable += 3;
                     }
                        
                     for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
@@ -64,14 +65,14 @@ namespace MyApp // Note: actual namespace depends on the project name.
                         {
                             //adds 9 dollars to moneyAvailable if true
                             horizontalRows += 1;
-                            moneyAvailable += 9;
+                            moneyAvailable += 3;
                         }
                         // checks vertical rows
                         if (symbol == outcomePullHandle2D[0, i] && symbol == outcomePullHandle2D[1, i] && symbol == outcomePullHandle2D[2, i] && bettingStyle == 2)
                         {
                             //adds 9 dollars to moneyAvailable if true 
                             verticalRows += 1;
-                            moneyAvailable += 9;
+                            moneyAvailable += 3;
                         }
                         
                         
@@ -82,20 +83,30 @@ namespace MyApp // Note: actual namespace depends on the project name.
                     {
                         //check vertical rows and adds 9 dollars to moneyAvailable
                         diagonalRows += 1;
-                        moneyAvailable += 9;
+                        moneyAvailable += 3;
                     }
                     //Checks upward diagonal
                     if (symbol == outcomePullHandle2D[0, 2] && symbol == outcomePullHandle2D[1, 1] && symbol == outcomePullHandle2D[2, 0] && bettingStyle == 2)
                     {
                         //check vertical rows and adds 9 dollars to moneyAvailable
                         diagonalRows += 1;
-                        moneyAvailable += 9;
+                        moneyAvailable += 3;
                     }
                 }
-                // it costs a dollar to play
-                moneyAvailable -= 1;
+                // cost of playing the round
+                if (bettingStyle == 0)
+                {
+                    moneyAvailable -= 1;
+                }
+                if (bettingStyle == 1)
+                {
+                    moneyAvailable -= 3;
+                }
+                if (bettingStyle == 2)
+                {
+                    moneyAvailable -= 4;
+                }
 
-                // vertical doesnt update
                 Console.WriteLine($"You have {horizontalRows} horizontal rows and {verticalRows} vertical rows! and {diagonalRows} diagonal rows!");
 
                 if (moneyAvailable <= 0)
