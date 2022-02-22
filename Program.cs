@@ -26,7 +26,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 Console.ReadLine();
                 
 
-                List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange", "melon", "lemons", "aces", "king", "queen", "jack" };
+                List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange", "melon", "lemons"};
 
                 var randWord = new Random();
                 string[,] outcomePullHandle2D = new string[3, 3];
@@ -45,51 +45,54 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 int horizontalRows = 0;
                 //Not used yet..
                 int verticalRows = 0;
+                int diagonalRows = 0;
                 foreach (string symbol in listOfSlotSymbols)
                 {
-                    //It need to go through all columns one row at a time. The condition of second loop makes sure it only loops as
-                    //long as there are columns, and then goes to next row. The condition of first loop makes sure it only loops as
-                    //long as there are rows.
-                    
                     for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
                     {
-                        
-                        int counter = 0;
-
-                        for (int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
-                        {
-                            if (outcomePullHandle2D[i,j] == symbol)
-                            {
-                                counter += 1;
-                                
-                            }
-                            if (counter == 3)
-                            {
-                                //if "symbol" matches all elements in row, it updates horizontalRows with +1
-                                horizontalRows += 1;
-                                // It could be 9 dollars or it could be more or less, dont know the statistics..
-                                moneyAvailable += 9;
-                            }
-                            
-                        }
-                    }
-
-                    for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
-                    {
+                        // checks horizontally
                         if (symbol == outcomePullHandle2D[0, i] && symbol == outcomePullHandle2D[1, i] && symbol == outcomePullHandle2D[2, i])
                         {
                             //check vertical rows and adds 9 dollars to moneyAvailable
                             verticalRows += 1;
                             moneyAvailable += 9;
                         }
+                        //Checks vertically
+                        if (symbol == outcomePullHandle2D[i, 0] && symbol == outcomePullHandle2D[i, 1] && symbol == outcomePullHandle2D[i, 2])
+                        {
+                            //check vertical rows and adds 9 dollars to moneyAvailable
+                            horizontalRows += 1;
+                            moneyAvailable += 9;
+                        }
+                        
+
+                    }
+                    //Checks downward diagonal
+                    if (symbol == outcomePullHandle2D[0, 0] && symbol == outcomePullHandle2D[1, 1] && symbol == outcomePullHandle2D[2, 2])
+                    {
+                        //check vertical rows and adds 9 dollars to moneyAvailable
+                        diagonalRows += 1;
+                        moneyAvailable += 9;
+                    }
+                    //Checks upward diagonal
+                    if (symbol == outcomePullHandle2D[0, 2] && symbol == outcomePullHandle2D[1, 1] && symbol == outcomePullHandle2D[2, 0])
+                    {
+                        //check vertical rows and adds 9 dollars to moneyAvailable
+                        diagonalRows += 1;
+                        moneyAvailable += 9;
                     }
                 }
                 // it costs a dollar to play
                 moneyAvailable -= 1;
 
                 // vertical doesnt update
-                Console.WriteLine($"You have {horizontalRows} horizontal rows and {verticalRows} vertical rows!");
+                Console.WriteLine($"You have {horizontalRows} horizontal rows and {verticalRows} vertical rows! and {diagonalRows} diagonal rows!");
 
+                if (moneyAvailable <= 0)
+                {
+                    continueToPlay = false;
+                    continue;
+                }
                 Console.WriteLine($"You have {moneyAvailable:0.##} $. Press <Enter> to continue, otherwise you will cash out");
                 
                 var playAgain = Console.ReadKey();
