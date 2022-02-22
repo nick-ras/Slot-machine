@@ -35,7 +35,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 {
                     for (int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
                     {
-                        // !!!!!!!!changed Next(listOfSlotSymbols.Count)] to Next(2)] order to test method
+                        // !!!!!!!!changed Next(listOfSlotSymbols.Count) to Next(2)] order to test method
                         outcomePullHandle2D[i, j] = listOfSlotSymbols[randWord.Next(listOfSlotSymbols.Count)];
                         Console.Write(outcomePullHandle2D[i, j] + "  ");
                     }
@@ -43,6 +43,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 }
 
                 int horizontalRows = 0;
+                //Not used yet..
                 int verticalRows = 0;
                 foreach (string symbol in listOfSlotSymbols)
                 {
@@ -72,12 +73,22 @@ namespace MyApp // Note: actual namespace depends on the project name.
                             
                         }
                     }
+
+                    for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
+                    {
+                        if (symbol == outcomePullHandle2D[0, i] && symbol == outcomePullHandle2D[1, i] && symbol == outcomePullHandle2D[2, i])
+                        {
+                            //check vertical rows and adds 9 dollars to moneyAvailable
+                            verticalRows += 1;
+                            moneyAvailable += 9;
+                        }
+                    }
                 }
                 // it costs a dollar to play
                 moneyAvailable -= 1;
 
                 // vertical doesnt update
-                Console.WriteLine($"You have {horizontalRows} horizontal rows");
+                Console.WriteLine($"You have {horizontalRows} horizontal rows and {verticalRows} vertical rows!");
 
                 Console.WriteLine($"You have {moneyAvailable:0.##} $. Press <Enter> to continue, otherwise you will cash out");
                 
