@@ -91,6 +91,8 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     //adds +1 centerRow count
                     centerRow += 1;
                     moneyAvailable += 6;
+                    ////Cost of playing BettingStyle.PlayCenter
+                    moneyAvailable -= 1;
                 }
                 
 
@@ -103,7 +105,12 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                         horizontalRows += 1;
                         moneyAvailable += 6;
                     }
-               
+                    if ((BettingStyle)bettingStyle == BettingStyle.PlayHorizontal && i == 0)
+                    {
+                        //Cost of playing BettingStyle.PlayHorizontal
+                        moneyAvailable -= 3;
+                    }
+
                     // checks vertical rows
                     if (outcomePullHandle2D[0, i] == outcomePullHandle2D[1, i] && outcomePullHandle2D[0, i] == outcomePullHandle2D[2, i] && (BettingStyle)bettingStyle == BettingStyle.PlayVerticalAndDiagonal)
                     {
@@ -111,7 +118,13 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                         verticalRows += 1;
                         moneyAvailable += 6;
                     }
-                    
+                    if ((BettingStyle) bettingStyle == BettingStyle.PlayVerticalAndDiagonal && i == 0)
+                    {
+                        //Cost of playing BettingStyle.PlayVerticalAndDiagonal
+                        moneyAvailable -= 4;
+                    }
+
+
                 }
                 //Checks downward diagonal
                 if (outcomePullHandle2D[0, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 0] == outcomePullHandle2D[2, 2] && (BettingStyle)bettingStyle == BettingStyle.PlayVerticalAndDiagonal)
@@ -127,24 +140,12 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     diagonalRows += 1;
                     moneyAvailable += 6;
                 }
-                //Cost of playing 
-                if ((BettingStyle)bettingStyle == BettingStyle.PlayCenter)
-                {
-                    moneyAvailable -= 1;
-                }
-                if ((BettingStyle)bettingStyle == BettingStyle.PlayHorizontal)
-                {
-                    moneyAvailable -= 3;
-                }
-                if ((BettingStyle)bettingStyle == BettingStyle.PlayVerticalAndDiagonal)
-                {
-                    moneyAvailable -= 4;
-                }
-
+               
                 //TO DO: Make it only mention the relevant rows
                 
                 Console.WriteLine($"You have {centerRow} center rows, {horizontalRows} horizontal rows and {verticalRows} vertical rows! and {diagonalRows} diagonal rows!");
 
+                
                 if (moneyAvailable <= 0)
                 {
                     continueToPlay = false;
