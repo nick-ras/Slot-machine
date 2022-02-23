@@ -6,22 +6,35 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
 {
     internal class Program
     {
-        
+        public enum BettingStyle
+        {
+            PlayCenter = 0,
+            PlayHorizontal = 1,
+            PlayVerticalAndDiagonal = 2
+        }
         static void Main(string[] args)
         {
-
-            double moneyAvailable;
+            bool continueToPlay = true;
+            double moneyAvailable = 0;
+            //bettingStyle was set to a default value that was not 0-2
             int bettingStyle = -1;
 
-            Console.WriteLine("Welcome to the game\nHow many dollars do you want to play for? Use comma if you want to enter cents");
-            // TO DO function crashes if user enter a non-integer, so maybe use a catch error method
-            // TO DO: dont except numbers < 1
-            moneyAvailable = Convert.ToDouble(Console.ReadLine()); 
-
-            bool continueToPlay = true;
-
-
-            
+            //This while loop loops until user inputs double value of 1 or above
+            while (moneyAvailable <= 1)
+            {
+                try
+                {
+                    Console.WriteLine("Welcome to the game\nHow many dollars do you want to play for? Use comma if you want to enter cents");
+                    // TO DO function crashes if user enter a non-integer, so maybe use a catch error method
+                    // TO DO: dont except numbers < 1
+                    moneyAvailable = Convert.ToDouble(Console.ReadLine());
+                    
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
 
             while (continueToPlay)
             {
@@ -29,14 +42,21 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 try
                 {
                     Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
+                    
                     bettingStyle = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine($"You choose {(BettingStyle)bettingStyle}");
                 }
-                catch (Exception e)
+                catch (FormatException ex)
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine(ex.Message);
+                }
+                if (bettingStyle > 2 || bettingStyle < 0)
+                {
+                    Console.WriteLine("Please enter a whole number between 0-2");
                     continue;
                 }
-               
+
+
                 Console.WriteLine("Press any key to pull the handle");
                 Console.ReadLine();
 
@@ -61,7 +81,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 int diagonalRows = 0;
 
                 //Checks center line
-                if (outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 2] && bettingStyle == 0)
+                if (outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 2] && (BettingStyle)bettingStyle == BettingStyle.PlayCenter)
                 {
                     //adds dollars to moneyAvailable if true, cost of playing is included
                     //adds +1 centerRow count
@@ -73,7 +93,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
                 {
                     //Checks horizontal rows
-                    if (outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 1] && outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 2] && bettingStyle == 1)
+                    if (outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 1] && outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 2] && (BettingStyle)bettingStyle == BettingStyle.PlayHorizontal)
                     {
                         
                         horizontalRows += 1;
@@ -81,7 +101,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     }
                
                     // checks vertical rows
-                    if (outcomePullHandle2D[0, i] == outcomePullHandle2D[1, i] && outcomePullHandle2D[0, i] == outcomePullHandle2D[2, i] && bettingStyle == 2)
+                    if (outcomePullHandle2D[0, i] == outcomePullHandle2D[1, i] && outcomePullHandle2D[0, i] == outcomePullHandle2D[2, i] && (BettingStyle)bettingStyle == BettingStyle.PlayVerticalAndDiagonal)
                     {
                         
                         verticalRows += 1;
@@ -90,14 +110,14 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     
                 }
                 //Checks downward diagonal
-                if (outcomePullHandle2D[0, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 0] == outcomePullHandle2D[2, 2] && bettingStyle == 2)
+                if (outcomePullHandle2D[0, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 0] == outcomePullHandle2D[2, 2] && (BettingStyle)bettingStyle == BettingStyle.PlayVerticalAndDiagonal)
                 {
                     
                     diagonalRows += 1;
                     moneyAvailable += 6;
                 }
                 //Checks upward diagonal
-                if (outcomePullHandle2D[0, 2] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 2] == outcomePullHandle2D[2, 0] && bettingStyle == 2)
+                if (outcomePullHandle2D[0, 2] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 2] == outcomePullHandle2D[2, 0] && (BettingStyle)bettingStyle == BettingStyle.PlayVerticalAndDiagonal)
                 {
                     
                     diagonalRows += 1;
