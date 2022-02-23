@@ -128,21 +128,22 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     moneyAvailable += 6;
                 }
                 //Cost of playing 
-                if (bettingStyle == 0)
+                if ((BettingStyle)bettingStyle == BettingStyle.PlayCenter)
                 {
                     moneyAvailable -= 1;
                 }
-                if (bettingStyle == 1)
+                if ((BettingStyle)bettingStyle == BettingStyle.PlayHorizontal)
                 {
                     moneyAvailable -= 3;
                 }
-                if (bettingStyle == 2)
+                if ((BettingStyle)bettingStyle == BettingStyle.PlayVerticalAndDiagonal)
                 {
                     moneyAvailable -= 4;
                 }
 
                 //TO DO: Make it only mention the relevant rows
-                Console.WriteLine($"You have {horizontalRows} horizontal rows and {verticalRows} vertical rows! and {diagonalRows} diagonal rows!");
+                
+                Console.WriteLine($"You have {centerRow} center rows, {horizontalRows} horizontal rows and {verticalRows} vertical rows! and {diagonalRows} diagonal rows!");
 
                 if (moneyAvailable <= 0)
                 {
