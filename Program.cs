@@ -47,6 +47,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 
                 try
                 {
+                    // TO DO make it only play horizontal if moneyAvailable >=3
                     Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
                     
                     bettingStyle = Convert.ToInt32(Console.ReadLine());
