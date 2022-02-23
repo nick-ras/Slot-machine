@@ -44,17 +44,20 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
                     
                     bettingStyle = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine($"You choose {(BettingStyle)bettingStyle}");
+                    if (bettingStyle > 2 || bettingStyle < 0)
+                    {
+                        Console.WriteLine("Please enter a whole number between 0-2");
+                        continue;
+                    }
+                    Console.WriteLine($"You chose {(BettingStyle)bettingStyle}");
+                    
                 }
                 catch (FormatException ex)
                 {
                     Console.WriteLine(ex.Message);
-                }
-                if (bettingStyle > 2 || bettingStyle < 0)
-                {
-                    Console.WriteLine("Please enter a whole number between 0-2");
                     continue;
                 }
+                
 
 
                 Console.WriteLine("Press any key to pull the handle");
