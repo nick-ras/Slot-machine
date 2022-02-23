@@ -1,17 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-
 using System;
 
-namespace MyApp // Note: actual namespace depends on the project name.
+namespace CsharpSlotMachine // Note: actual namespace depends on the project name.
 {
     internal class Program
     {
+        
         static void Main(string[] args)
         {
 
             double moneyAvailable;
-            
+            int bettingStyle = -1;
+
             Console.WriteLine("Welcome to the game\nHow many dollars do you want to play for? Use comma if you want to enter cents");
             // TO DO function crashes if user enter a non-integer, so maybe use a catch error method
             // TO DO: dont except numbers < 1
@@ -19,10 +20,12 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
             bool continueToPlay = true;
 
+
+            
+
             while (continueToPlay)
             {
-                // Make try statement avaliable outside try statement
-                int bettingStyle = -1;
+                
                 try
                 {
                     Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
@@ -46,7 +49,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 {
                     for (int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
                     {
-                        outcomePullHandle2D[i, j] = listOfSlotSymbols[randWord.Next(listOfSlotSymbols.Count)];
+                        outcomePullHandle2D[i, j] = listOfSlotSymbols[randWord.Next(2)];
                         Console.Write(outcomePullHandle2D[i, j] + "  ");
                     }
                     Console.WriteLine("");
@@ -57,51 +60,50 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 int verticalRows = 0;
                 int diagonalRows = 0;
 
-                foreach (string symbol in listOfSlotSymbols)
+                //Checks center line
+                if (outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 2] && bettingStyle == 0)
                 {
-                    //Checks center line
-                    if (symbol == outcomePullHandle2D[1, 0] && symbol == outcomePullHandle2D[1, 1] && symbol == outcomePullHandle2D[1, 2] && bettingStyle == 0)
-                    {
-                        centerRow += 1;
-                        moneyAvailable += 3;
-                    }
-                       
-                    for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
-                    {
-                        //Checks horizontal rows
-                        if (symbol == outcomePullHandle2D[i, 0] && symbol == outcomePullHandle2D[i, 1] && symbol == outcomePullHandle2D[i, 2] && bettingStyle == 1)
-                        {
-                            //adds 9 dollars to moneyAvailable if true
-                            horizontalRows += 1;
-                            moneyAvailable += 3;
-                        }
-                        // checks vertical rows
-                        if (symbol == outcomePullHandle2D[0, i] && symbol == outcomePullHandle2D[1, i] && symbol == outcomePullHandle2D[2, i] && bettingStyle == 2)
-                        {
-                            //adds 9 dollars to moneyAvailable if true 
-                            verticalRows += 1;
-                            moneyAvailable += 3;
-                        }
-                        
-                        
-
-                    }
-                    //Checks downward diagonal
-                    if (symbol == outcomePullHandle2D[0, 0] && symbol == outcomePullHandle2D[1, 1] && symbol == outcomePullHandle2D[2, 2] && bettingStyle == 2)
-                    {
-                        //check vertical rows and adds 9 dollars to moneyAvailable
-                        diagonalRows += 1;
-                        moneyAvailable += 3;
-                    }
-                    //Checks upward diagonal
-                    if (symbol == outcomePullHandle2D[0, 2] && symbol == outcomePullHandle2D[1, 1] && symbol == outcomePullHandle2D[2, 0] && bettingStyle == 2)
-                    {
-                        //check vertical rows and adds 9 dollars to moneyAvailable
-                        diagonalRows += 1;
-                        moneyAvailable += 3;
-                    }
+                    //adds dollars to moneyAvailable if true, cost of playing is included
+                    //adds +1 centerRow count
+                    centerRow += 1;
+                    moneyAvailable += 6;
                 }
-                // cost of playing the round
+                
+
+                for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
+                {
+                    //Checks horizontal rows
+                    if (outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 1] && outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 2] && bettingStyle == 1)
+                    {
+                        
+                        horizontalRows += 1;
+                        moneyAvailable += 6;
+                    }
+               
+                    // checks vertical rows
+                    if (outcomePullHandle2D[0, i] == outcomePullHandle2D[1, i] && outcomePullHandle2D[0, i] == outcomePullHandle2D[2, i] && bettingStyle == 2)
+                    {
+                        
+                        verticalRows += 1;
+                        moneyAvailable += 6;
+                    }
+                    
+                }
+                //Checks downward diagonal
+                if (outcomePullHandle2D[0, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 0] == outcomePullHandle2D[2, 2] && bettingStyle == 2)
+                {
+                    
+                    diagonalRows += 1;
+                    moneyAvailable += 6;
+                }
+                //Checks upward diagonal
+                if (outcomePullHandle2D[0, 2] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 2] == outcomePullHandle2D[2, 0] && bettingStyle == 2)
+                {
+                    
+                    diagonalRows += 1;
+                    moneyAvailable += 6;
+                }
+                //Cost of playing 
                 if (bettingStyle == 0)
                 {
                     moneyAvailable -= 1;
