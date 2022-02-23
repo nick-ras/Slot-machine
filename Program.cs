@@ -59,9 +59,10 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 }
                 
 
-
-                Console.WriteLine("Press any key to pull the handle");
+                // i doesnt do what it says
+                Console.WriteLine("Press enter to pull the handle");
                 Console.ReadLine();
+                
 
                 List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange", "melon", "lemons"};
 
