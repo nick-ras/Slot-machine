@@ -166,6 +166,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
 
                 {
                     continueToPlay = false;
+                    continue;
                 }
             }
         }
