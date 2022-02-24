@@ -65,7 +65,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     continue;
                 }
                 
-
+                if 
                 // i doesnt do what it says
                 Console.WriteLine("Press enter to pull the handle");
                 Console.ReadLine();
@@ -94,9 +94,9 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 //Checks center line
                 if (outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 2] && (BettingStyle)bettingStyle == BettingStyle.PlayCenter)
                 {
-                    //adds dollars to moneyAvailable if true, cost of playing is included
                     //adds +1 centerRow count
                     centerRow += 1;
+                    //adds dollars to moneyAvailable if true
                     moneyAvailable += 6;
                     ////Cost of playing BettingStyle.PlayCenter
                     moneyAvailable -= 1;
