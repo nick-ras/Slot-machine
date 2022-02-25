@@ -65,7 +65,6 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     continue;
                 }
                 
-                if 
                 // i doesnt do what it says
                 Console.WriteLine("Press enter to pull the handle");
                 Console.ReadLine();
@@ -156,7 +155,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 if (moneyAvailable <= 0)
                 {
                     continueToPlay = false;
-                    continue;
+                    break;
                 }
 
                 Console.WriteLine($"You have {moneyAvailable:0.##} $. Press <Enter> to continue, otherwise you will cash out");
@@ -166,7 +165,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
 
                 {
                     continueToPlay = false;
-                    continue;
+                    break;
                 }
             }
         }
