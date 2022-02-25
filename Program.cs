@@ -65,7 +65,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     continue;
                 }
                 
-                
+                if 
                 // i doesnt do what it says
                 Console.WriteLine("Press enter to pull the handle");
                 Console.ReadLine();
