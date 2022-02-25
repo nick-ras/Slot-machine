@@ -35,7 +35,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 bool successEnterAmount = double.TryParse(Console.ReadLine(), out moneyAvailable);
                 if (!successEnterAmount)
                 {
-                    break;
+                    continue;
                 }
                     
                 
@@ -48,7 +48,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     // TO DO make it only play horizontal if moneyAvailable >=3
                     Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
 
-
+                    
                     bool success = int.TryParse(Console.ReadLine(), out bettingStyle);
                     if (success)
                     {
@@ -91,7 +91,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                                 youWon = true;
 
                             }
-                            else;
+                            else
                             {
                                 ////Cost of playing BettingStyle.PlayCenter
                                 moneyAvailable -= 1;
