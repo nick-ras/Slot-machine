@@ -7,12 +7,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
         /// <summary>
         /// Storing information of which game the user wants to play
         /// </summary>
-        public enum BettingStyle
-        {
-            PlayCenter = 0,
-            PlayHorizontal = 1,
-            PlayVerticalAndDiagonal = 2
-        }
+        
         /// <summary>
         /// The main program, that continues until player doesnt have any more money, or wants to exit
         /// </summary>
