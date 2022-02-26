@@ -12,6 +12,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
         /// The main program, that continues until player doesnt have any more money, or wants to exit
         /// </summary>
         /// <param name="args"></param>
+        /// 
         static void Main(string[] args)
         {
             // PowerIsOn should run constantly
