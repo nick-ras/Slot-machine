@@ -48,18 +48,19 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     // TO DO make it only play horizontal if moneyAvailable >=3
                     Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
 
-                    
-                    bool success = int.TryParse(Console.ReadLine(), out bettingStyle);
-                    if (success)
+                    string stringBettingStyle = Console.ReadLine();
+                    bool success = int.TryParse(stringBettingStyle, out bettingStyle);
+
+                    if (success && 0 <= bettingStyle && bettingStyle <= 2)
                     {
                         Console.WriteLine("Press enter to pull the handle");
 
                     }
                     else
                     {
-                        Console.WriteLine("Please enter a whole number between 0-2");
                         continue;
                     }
+
                     Console.ReadLine();
 
                     List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange", "melon", "lemons" };
