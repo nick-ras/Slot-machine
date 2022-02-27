@@ -4,6 +4,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 {
 
     internal class Program
+
     {
 
         static void Main(string[] args)
