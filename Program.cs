@@ -28,7 +28,6 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 
                 while (continueToPlay)
                 {
-                    youWon = false;
                     double moneyChecker = moneyAvailable;
 
                     // TO DO make it only play horizontal if moneyAvailable >=3
