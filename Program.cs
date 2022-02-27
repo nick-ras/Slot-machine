@@ -58,7 +58,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                             if (outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 2])
                             {
                                 //adds dollars to moneyAvailable if true, cost of playing included
-                                moneyAvailable += 5;
+                                moneyAvailable += 6;
                                 youWon = true;
 
                             }
@@ -90,8 +90,6 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                                 // checks vertical rows
                                 if (outcomePullHandle2D[0, i] == outcomePullHandle2D[1, i] && outcomePullHandle2D[0, i] == outcomePullHandle2D[2, i])
                                 {
-
-
                                     moneyAvailable += 6;
                                     youWon = true;
                                 }
@@ -107,12 +105,13 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                             {
 
                                 moneyAvailable += 6;
-                                
+                                youWon = true;
                             }
                             //Checks upward diagonal
                             if (outcomePullHandle2D[0, 2] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 2] == outcomePullHandle2D[2, 0])
                             {
                                 moneyAvailable += 6;
+                                youWon = true;
                             }
                             break;
                     }
