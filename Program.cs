@@ -11,30 +11,24 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
             bool PowerIsOn = true;
             bool continueToPlay = true;
             int bettingStyle;
+            double moneyAvailable = 0;
+            bool youWon;
 
             while (PowerIsOn)
             {
                 Console.WriteLine("Welcome to the game, press enter to start");
                 Console.ReadLine();
-
-
-                // it resets everytime new user starts the game or there is an error in while loop
-                double moneyAvailable = 0;
-
                 Console.WriteLine("How many dollars do you want to play for? Use comma if you want to enter cents"); ;
 
-                //Not sure it right to use while and if here
                 bool successEnterAmount = double.TryParse(Console.ReadLine(), out moneyAvailable);
                 if (!successEnterAmount)
                 {
                     continue;
                 }
 
-
-
                 while (continueToPlay)
                 {
-                    bool youWon = false;
+                    youWon = false;
 
                     // TO DO make it only play horizontal if moneyAvailable >=3
                     Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
@@ -156,8 +150,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
             }
         }
 
-
-            public static void CheckHorizontal(string[,] outcomePullHandle2D, double moneyAvailable, bool youWon)
+        public static void CheckHorizontal(string[,] outcomePullHandle2D, double moneyAvailable, bool youWon)
         {
             for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
             {
@@ -174,6 +167,5 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 }
             }
         }
-        
     }
 }
