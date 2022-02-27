@@ -2,17 +2,24 @@
 
 namespace CsharpSlotMachine // Note: actual namespace depends on the project name.
 {
+    
     internal class Program
     {
-        /// <summary>
-        /// Storing information of which game the user wants to play
-        /// </summary>
+        public static void random3x3Array(string[,] outcomePullHandle2D)
+        {
+            var randWord = new Random();
+            List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange"};
 
-        /// <summary>
-        /// The main program, that continues until player doesnt have any more money, or wants to exit
-        /// </summary>
-        /// <param name="args"></param>
-        /// 
+            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
+            {
+                for (int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
+                {
+                    outcomePullHandle2D[i, j] = listOfSlotSymbols[randWord.Next(listOfSlotSymbols.Count)];
+                    Console.Write(outcomePullHandle2D[i, j] + "  ");
+                }
+                Console.WriteLine("");
+            }
+        }
         static void Main(string[] args)
         {
             // PowerIsOn should run constantly
@@ -64,23 +71,10 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
 
                     Console.ReadLine();
 
-                    List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange", "melon", "lemons" };
-
-                    var randWord = new Random();
                     string[,] outcomePullHandle2D = new string[3, 3];
 
-                    for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
-                        {
-                            outcomePullHandle2D[i, j] = listOfSlotSymbols[randWord.Next(2)];
-                            Console.Write(outcomePullHandle2D[i, j] + "  ");
-                        }
-                        Console.WriteLine("");
-                    }
-
+                    random3x3Array(outcomePullHandle2D);
                     
-
 
                     switch ((BettingStyle)bettingStyle)
                     {
