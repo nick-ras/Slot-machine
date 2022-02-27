@@ -14,7 +14,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
             bool continueToPlay = true;
             int bettingStyle;
             double moneyAvailable;
-            bool youWon;
+            
 
             while (PowerIsOn)
             {
@@ -66,10 +66,6 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                             break;
                     }
 
-                    if (youWon == true)
-                    {
-                        Console.WriteLine("You won on one or more rows!");
-                    }
                     if (moneyAvailable > moneyChecker)
                     {
                         Console.WriteLine("You won on one or more rows!");
