@@ -7,10 +7,9 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
     {
         static void Main(string[] args)
         {
-            // PowerIsOn should run constantly
+            // PowerIsOn is made to run all the time, like in casinos
             bool PowerIsOn = true;
             bool continueToPlay = true;
-            //bettingStyle was set to a default value that was not 0-2
             int bettingStyle;
 
             while (PowerIsOn)
@@ -62,9 +61,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     switch ((BettingStyle)bettingStyle)
                     {
                         case BettingStyle.PlayCenter:
-                            //Checks center line
-                            Program.CheckCenter(outcomePullHandle2D, moneyAvailable, youWon);
-
+                            CheckCenter(outcomePullHandle2D, moneyAvailable, youWon);
                             break;
                         case BettingStyle.PlayHorizontal:
                             CheckHorizontal(outcomePullHandle2D, moneyAvailable, youWon);
@@ -81,7 +78,6 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
 
                     if (moneyAvailable <= 0)
                     {
-
                         break;
                     }
 
@@ -90,7 +86,6 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     var playAgain = Console.ReadKey();
                     if (playAgain.Key != ConsoleKey.Enter)
                     {
-
                         break;
                     }
                 }
