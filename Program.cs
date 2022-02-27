@@ -20,7 +20,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
             {
                 SetupGame();
                 bool successEnterAmount = double.TryParse(Console.ReadLine(), out moneyAvailable);
-                if (!successEnterAmount)
+                if (!successEnterAmount && moneyAvailable >= 4)
                 {
                     continue;
                 }
@@ -88,7 +88,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
         {
             Console.WriteLine("Welcome to the game, press enter to start");
             Console.ReadLine();
-            Console.WriteLine("How many dollars do you want to play for? Use comma if you want to enter cents");
+            Console.WriteLine("How many dollars do you want to play for? The game will continue until you have 4$ left");
         }
         public static void random3x3Array(string[,] outcomePullHandle2D)
         {
