@@ -1,81 +1,65 @@
 ﻿using System;
 
-namespace CsharpSlotMachine // Note: actual namespace depends on the project name.
+namespace Csharp_Slot_machine // Note: actual namespace depends on the project name.
 {
-    
+
     internal class Program
     {
-        
-        
         static void Main(string[] args)
         {
             // PowerIsOn is made to run all the time, like in casinos
             bool PowerIsOn = true;
             bool continueToPlay = true;
-            int bettingStyle;
-            double moneyAvailable;
-            
+
+            double cashAvailable;
+
 
             while (PowerIsOn)
             {
-                SetupGame();
-                bool successEnterAmount = double.TryParse(Console.ReadLine(), out moneyAvailable);
+                UIMethods.SetupGame();
+
+                bool successEnterAmount = double.TryParse(Console.ReadLine(), out cashAvailable);
                 if (!successEnterAmount)
                 {
                     continue;
                 }
-                
+
                 while (continueToPlay)
                 {
-                    double moneyChecker = moneyAvailable;
+                    int rows;
 
-                    // TO DO make it only play horizontal if moneyAvailable >=3
-                    Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
+                    UIMethods.GameModes chosenGameMode = (UIMethods.GameModes)UIMethods.chooseGameMode();
 
-                    bool success = int.TryParse(Console.ReadLine(), out bettingStyle);
+                    string[,] slotOutput = random3x3Array();
+                    UIMethods.ShowArray(slotOutput);
+                     
+                    rows = CheckRows(chosenGameMode, slotOutput);
 
-                    if (success && 0 <= bettingStyle && bettingStyle <= 2)
+                    cashAvailable = cashAvailable + AddCashWinnings(slotOutput, rows);
+
+                    if (chosenGameMode == UIMethods.GameModes.PlayCenter)
                     {
-                        Console.WriteLine("Press enter to pull the handle");
-
+                        cashAvailable -= 1;
                     }
-                    else
+                    if (chosenGameMode == UIMethods.GameModes.PlayHorizontal)
                     {
-                        continue;
+                        cashAvailable -= 3;
                     }
-
-                    Console.ReadLine();
-
-                    string[,] outcomePullHandle2D = new string[3, 3];
-
-                    random3x3Array(outcomePullHandle2D);
-
-
-                    switch ((BettingStyle)bettingStyle)
+                    if (chosenGameMode == UIMethods.GameModes.PlayVerticalAndDiagonal)
                     {
-                        case BettingStyle.PlayCenter:
-                            CheckCenter(outcomePullHandle2D, ref moneyAvailable);
-                            break;
-                        case BettingStyle.PlayHorizontal:
-                            CheckHorizontal(outcomePullHandle2D, ref moneyAvailable);
-                            break;
-                        case BettingStyle.PlayVerticalAndDiagonal:
-                            CheckVerticalAndDiagonal(outcomePullHandle2D, ref moneyAvailable);
-                            break;
+                        cashAvailable -= 4;
                     }
 
-                    if (moneyAvailable > moneyChecker)
-                    {
-                        Console.WriteLine("You won on one or more rows!");
-                    }
 
-                    if (moneyAvailable <= 4)
+
+
+                    if (cashAvailable <= 4)
                     {
-                        Console.WriteLine("You less than 4 $ left, the game stops and gives you the rest of the amount back");
+                        UIMethods.CashOut();
                         break;
                     }
 
-                    Console.WriteLine($"You have {moneyAvailable:0.##} $. Press <Enter> to continue, otherwise you will cash out");
+                    UIMethods.CashCount(cashAvailable);
 
                     var playAgain = Console.ReadKey();
                     if (playAgain.Key != ConsoleKey.Enter)
@@ -85,88 +69,71 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 }
             }
         }
-        static void SetupGame()
-        {
-            Console.WriteLine("Welcome to the game, press enter to start");
-            Console.ReadLine();
-            Console.WriteLine("How many dollars do you want to play for? The game will continue until you have 4$ left");
-        }
-        public static void random3x3Array(string[,] outcomePullHandle2D)
+
+        public static string[,] random3x3Array()
         {
             var randWord = new Random();
-            List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange"};
+            List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange" };
+            string[,] randomArray = new string[3, 3];
 
-            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
-            {
-                for (int j = 0; j < outcomePullHandle2D.GetLength(1); j++)
-                {
-                    outcomePullHandle2D[i, j] = listOfSlotSymbols[randWord.Next(listOfSlotSymbols.Count)];
-                    Console.Write(outcomePullHandle2D[i, j] + "  ");
-                }
-                Console.WriteLine("");
-            }
-        }
-        public static double CheckCenter(string[,] outcomePullHandle2D, ref double moneyAvailable)
-        {
-            if (outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 2])
-            {
-                //adds dollars to moneyAvailable if true, cost of playing included
-                moneyAvailable += 5;
-                
 
-            }
-            else
+            for (int i = 0; i < randomArray.GetLength(0); i++)
             {
-                ////Cost of playing BettingStyle.PlayCenter
-                moneyAvailable -= 1;
+                for (int j = 0; j < randomArray.GetLength(1); j++)
+                {
+                    randomArray[i, j] = listOfSlotSymbols[randWord.Next(listOfSlotSymbols.Count)];
+                }
             }
-            return moneyAvailable;
+            return randomArray;
         }
-        public static double CheckHorizontal(string[,] outcomePullHandle2D, ref double moneyAvailable)
+        public static int CheckRows(UIMethods.GameModes mode, string[,] slotOutput)
         {
-            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
+            int rowCount = 0;
+            switch (mode)
             {
-
-                //Checks horizontal rows
-                if (outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 1] && outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 2])
-                {
-                    moneyAvailable += 6;
-                }
-                if (i == 0)
-                {
-                    //Cost of playing BettingStyle.PlayHorizontal
-                    moneyAvailable -= 3;
-                }
+                case UIMethods.GameModes.PlayCenter:
+                    if (slotOutput[1, 0] == slotOutput[1, 1] && slotOutput[1, 0] == slotOutput[1, 2])
+                    {
+                        rowCount += 1;
+                    }
+                    break;
+                case UIMethods.GameModes.PlayHorizontal:
+                    for (int i = 0; i < slotOutput.GetLength(0); i++)
+                    {
+                        //Checks horizontal rows
+                        if (slotOutput[i, 0] == slotOutput[i, 1] && slotOutput[i, 0] == slotOutput[i, 2])
+                        {
+                            rowCount += 1;
+                        }
+                    }
+                    break;
+                case UIMethods.GameModes.PlayVerticalAndDiagonal:
+                    for (int i = 0; i < slotOutput.GetLength(0); i++)
+                    {
+                        // checks vertical rows
+                        if (slotOutput[0, i] == slotOutput[1, i] && slotOutput[0, i] == slotOutput[2, i])
+                        {
+                            rowCount += 1;
+                        }
+                    }
+                    //Checks downward diagonal
+                    if (slotOutput[0, 0] == slotOutput[1, 1] && slotOutput[0, 0] == slotOutput[2, 2])
+                    {
+                        rowCount += 1;
+                    }
+                    //Checks upward diagonal
+                    if (slotOutput[0, 2] == slotOutput[1, 1] && slotOutput[0, 2] == slotOutput[2, 0])
+                    {
+                        rowCount += 1;
+                    }
+                    break;
             }
-            return moneyAvailable;
+            return rowCount;
         }
-        public static double CheckVerticalAndDiagonal(string[,] outcomePullHandle2D, ref double moneyAvailable)
+        public static double AddCashWinnings(string[,] slotOutput, int rows)
         {
-            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
-            {
-                // checks vertical rows
-                if (outcomePullHandle2D[0, i] == outcomePullHandle2D[1, i] && outcomePullHandle2D[0, i] == outcomePullHandle2D[2, i])
-                {
-                    moneyAvailable += 6;
-                }
-                if (i == 0)
-                {
-                    //Cost of playing BettingStyle.PlayVerticalAndDiagonal
-                    moneyAvailable -= 4;
-                }
-            }
-            //Checks downward diagonal
-            if (outcomePullHandle2D[0, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 0] == outcomePullHandle2D[2, 2])
-            {
-                moneyAvailable += 6;
-            }
-            //Checks upward diagonal
-            if (outcomePullHandle2D[0, 2] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 2] == outcomePullHandle2D[2, 0])
-            {
-                moneyAvailable += 6;
-                
-            }
-            return moneyAvailable;
+            double cash = rows * 6;
+            return cash;
         }
     }
 }
