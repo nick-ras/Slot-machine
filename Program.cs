@@ -20,7 +20,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
             {
                 SetupGame();
                 bool successEnterAmount = double.TryParse(Console.ReadLine(), out moneyAvailable);
-                if (!successEnterAmount && moneyAvailable >= 4)
+                if (!successEnterAmount)
                 {
                     continue;
                 }
@@ -69,8 +69,9 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                         Console.WriteLine("You won on one or more rows!");
                     }
 
-                    if (moneyAvailable <= 0)
+                    if (moneyAvailable <= 4)
                     {
+                        Console.WriteLine("You less than 4 $ left, the game stops and gives you the rest of the amount back");
                         break;
                     }
 
