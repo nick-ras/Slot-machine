@@ -5,33 +5,27 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
     
     internal class Program
     {
-        static void SetupGame()
-        {
-            Console.WriteLine("Welcome to the game, press enter to start");
-            Console.ReadLine();
-        }
+        
+        
         static void Main(string[] args)
         {
             // PowerIsOn is made to run all the time, like in casinos
             bool PowerIsOn = true;
             bool continueToPlay = true;
             int bettingStyle;
-            double moneyAvailable = 0;
+            double moneyAvailable;
             bool youWon;
 
             while (PowerIsOn)
             {
                 SetupGame();
-
-
-                Console.WriteLine("How many dollars do you want to play for? Use comma if you want to enter cents"); ;
+                startingAmount();
                 bool successEnterAmount = double.TryParse(Console.ReadLine(), out moneyAvailable);
                 if (!successEnterAmount)
                 {
                     continue;
                 }
                 
-
                 while (continueToPlay)
                 {
                     youWon = false;
@@ -142,6 +136,15 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     }
                 }
             }
+        }
+        static void SetupGame()
+        {
+            Console.WriteLine("Welcome to the game, press enter to start");
+            Console.ReadLine();
+        }
+        static void startingAmount()
+        {
+            Console.WriteLine("How many dollars do you want to play for? Use comma if you want to enter cents"); ;
         }
         public static void random3x3Array(string[,] outcomePullHandle2D)
         {
