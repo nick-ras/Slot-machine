@@ -5,6 +5,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
     internal class Program
     {
+
         static void Main(string[] args)
         {
             // PowerIsOn is made to run all the time, like in casinos
