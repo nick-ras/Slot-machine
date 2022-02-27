@@ -5,6 +5,97 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
     
     internal class Program
     {
+        static void Main(string[] args)
+        {
+            // PowerIsOn should run constantly
+            bool PowerIsOn = true;
+            bool continueToPlay = true;
+            //bettingStyle was set to a default value that was not 0-2
+            int bettingStyle;
+
+            while (PowerIsOn)
+            {
+                Console.WriteLine("Welcome to the game, press enter to start");
+                Console.ReadLine();
+
+
+                // it resets everytime new user starts the game or there is an error in while loop
+                double moneyAvailable = 0;
+
+                Console.WriteLine("How many dollars do you want to play for? Use comma if you want to enter cents"); ;
+
+                //Not sure it right to use while and if here
+                bool successEnterAmount = double.TryParse(Console.ReadLine(), out moneyAvailable);
+                if (!successEnterAmount)
+                {
+                    continue;
+                }
+
+
+
+                while (continueToPlay)
+                {
+                    bool youWon = false;
+
+                    // TO DO make it only play horizontal if moneyAvailable >=3
+                    Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
+
+                    bool success = int.TryParse(Console.ReadLine(), out bettingStyle);
+
+                    if (success && 0 <= bettingStyle && bettingStyle <= 2)
+                    {
+                        Console.WriteLine("Press enter to pull the handle");
+
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    Console.ReadLine();
+
+                    string[,] outcomePullHandle2D = new string[3, 3];
+
+                    random3x3Array(outcomePullHandle2D);
+
+
+                    switch ((BettingStyle)bettingStyle)
+                    {
+                        case BettingStyle.PlayCenter:
+                            //Checks center line
+                            Program.CheckCenter(outcomePullHandle2D, moneyAvailable, youWon);
+
+                            break;
+                        case BettingStyle.PlayHorizontal:
+                            CheckHorizontal(outcomePullHandle2D, moneyAvailable, youWon);
+                            break;
+                        case BettingStyle.PlayVerticalAndDiagonal:
+                            CheckVerticalAndDiagonal(outcomePullHandle2D, moneyAvailable, youWon);
+                            break;
+                    }
+
+                    if (youWon == true)
+                    {
+                        Console.WriteLine("You won on one or more rows!");
+                    }
+
+                    if (moneyAvailable <= 0)
+                    {
+
+                        break;
+                    }
+
+                    Console.WriteLine($"You have {moneyAvailable:0.##} $. Press <Enter> to continue, otherwise you will cash out");
+
+                    var playAgain = Console.ReadKey();
+                    if (playAgain.Key != ConsoleKey.Enter)
+                    {
+
+                        break;
+                    }
+                }
+            }
+        }
         public static void random3x3Array(string[,] outcomePullHandle2D)
         {
             var randWord = new Random();
@@ -88,96 +179,6 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 }
             }
         }
-        static void Main(string[] args)
-        {
-            // PowerIsOn should run constantly
-            bool PowerIsOn = true;
-            bool continueToPlay = true;
-            //bettingStyle was set to a default value that was not 0-2
-            int bettingStyle;
-
-            while (PowerIsOn)
-            {
-                Console.WriteLine("Welcome to the game, press enter to start");
-                Console.ReadLine();
-
-                
-                // it resets everytime new user starts the game or there is an error in while loop
-                double moneyAvailable = 0;
-
-                Console.WriteLine("How many dollars do you want to play for? Use comma if you want to enter cents"); ;
-
-                //Not sure it right to use while and if here
-                bool successEnterAmount = double.TryParse(Console.ReadLine(), out moneyAvailable);
-                if (!successEnterAmount)
-                {
-                    continue;
-                }
-                    
-                
-
-                while (continueToPlay)
-                {
-                    bool youWon = false;
-                    
-                    // TO DO make it only play horizontal if moneyAvailable >=3
-                    Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
-
-                    bool success = int.TryParse(Console.ReadLine(), out bettingStyle);
-
-                    if (success && 0 <= bettingStyle && bettingStyle <= 2)
-                    {
-                        Console.WriteLine("Press enter to pull the handle");
-
-                    }
-                    else
-                    {
-                        continue;
-                    }
-
-                    Console.ReadLine();
-
-                    string[,] outcomePullHandle2D = new string[3, 3];
-
-                    random3x3Array(outcomePullHandle2D);
-                    
-
-                    switch ((BettingStyle)bettingStyle)
-                    {
-                        case BettingStyle.PlayCenter:
-                            //Checks center line
-                            Program.CheckCenter(outcomePullHandle2D, moneyAvailable, youWon);
-                            
-                            break;
-                        case BettingStyle.PlayHorizontal:
-                            CheckHorizontal(outcomePullHandle2D, moneyAvailable, youWon);
-                            break;
-                        case BettingStyle.PlayVerticalAndDiagonal:
-                            CheckVerticalAndDiagonal(outcomePullHandle2D, moneyAvailable, youWon);
-                            break;
-                    }
-
-                    if (youWon == true)
-                    {
-                        Console.WriteLine("You won on one or more rows!");
-                    }
-
-                    if (moneyAvailable <= 0)
-                    {
-
-                        break;
-                    }
-
-                    Console.WriteLine($"You have {moneyAvailable:0.##} $. Press <Enter> to continue, otherwise you will cash out");
-
-                    var playAgain = Console.ReadKey();
-                    if (playAgain.Key != ConsoleKey.Enter)
-                    {
-
-                        break;
-                    }
-                }
-            }
-        }
+        
     }
 }
