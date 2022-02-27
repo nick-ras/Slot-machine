@@ -29,6 +29,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 while (continueToPlay)
                 {
                     youWon = false;
+                    double moneyChecker = moneyAvailable;
 
                     // TO DO make it only play horizontal if moneyAvailable >=3
                     Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
@@ -55,68 +56,21 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                     switch ((BettingStyle)bettingStyle)
                     {
                         case BettingStyle.PlayCenter:
-                            if (outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 2])
-                            {
-                                //adds dollars to moneyAvailable if true, cost of playing included
-                                moneyAvailable += 6;
-                                youWon = true;
-
-                            }
-                            else
-                            {
-                                ////Cost of playing BettingStyle.PlayCenter
-                                moneyAvailable -= 1;
-                            }
+                            CheckCenter(outcomePullHandle2D, ref moneyAvailable);
                             break;
                         case BettingStyle.PlayHorizontal:
-                            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
-                            {
-                                //Checks horizontal rows
-                                if (outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 1] && outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 2])
-                                {
-                                    moneyAvailable += 6;
-                                    youWon = true;
-                                }
-                                if (i == 0)
-                                {
-                                    //Cost of playing BettingStyle.PlayHorizontal
-                                    moneyAvailable -= 3;
-                                }
-                            }
+                            CheckHorizontal(outcomePullHandle2D, ref moneyAvailable);
                             break;
                         case BettingStyle.PlayVerticalAndDiagonal:
-                            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
-                            {
-                                // checks vertical rows
-                                if (outcomePullHandle2D[0, i] == outcomePullHandle2D[1, i] && outcomePullHandle2D[0, i] == outcomePullHandle2D[2, i])
-                                {
-                                    moneyAvailable += 6;
-                                    youWon = true;
-                                }
-                                if (i == 0)
-                                {
-                                    //Cost of playing BettingStyle.PlayVerticalAndDiagonal
-                                    moneyAvailable -= 4;
-                                }
-
-                            }
-                            //Checks downward diagonal
-                            if (outcomePullHandle2D[0, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 0] == outcomePullHandle2D[2, 2])
-                            {
-
-                                moneyAvailable += 6;
-                                youWon = true;
-                            }
-                            //Checks upward diagonal
-                            if (outcomePullHandle2D[0, 2] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 2] == outcomePullHandle2D[2, 0])
-                            {
-                                moneyAvailable += 6;
-                                youWon = true;
-                            }
+                            CheckVerticalAndDiagonal(outcomePullHandle2D, ref moneyAvailable);
                             break;
                     }
 
                     if (youWon == true)
+                    {
+                        Console.WriteLine("You won on one or more rows!");
+                    }
+                    if (moneyAvailable > moneyChecker)
                     {
                         Console.WriteLine("You won on one or more rows!");
                     }
@@ -159,6 +113,68 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 }
                 Console.WriteLine("");
             }
+        }
+        public static double CheckCenter(string[,] outcomePullHandle2D, ref double moneyAvailable)
+        {
+            if (outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[1, 0] == outcomePullHandle2D[1, 2])
+            {
+                //adds dollars to moneyAvailable if true, cost of playing included
+                moneyAvailable += 5;
+                
+
+            }
+            else
+            {
+                ////Cost of playing BettingStyle.PlayCenter
+                moneyAvailable -= 1;
+            }
+            return moneyAvailable;
+        }
+        public static double CheckHorizontal(string[,] outcomePullHandle2D, ref double moneyAvailable)
+        {
+            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
+            {
+
+                //Checks horizontal rows
+                if (outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 1] && outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 2])
+                {
+                    moneyAvailable += 6;
+                }
+                if (i == 0)
+                {
+                    //Cost of playing BettingStyle.PlayHorizontal
+                    moneyAvailable -= 3;
+                }
+            }
+            return moneyAvailable;
+        }
+        public static double CheckVerticalAndDiagonal(string[,] outcomePullHandle2D, ref double moneyAvailable)
+        {
+            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
+            {
+                // checks vertical rows
+                if (outcomePullHandle2D[0, i] == outcomePullHandle2D[1, i] && outcomePullHandle2D[0, i] == outcomePullHandle2D[2, i])
+                {
+                    moneyAvailable += 6;
+                }
+                if (i == 0)
+                {
+                    //Cost of playing BettingStyle.PlayVerticalAndDiagonal
+                    moneyAvailable -= 4;
+                }
+            }
+            //Checks downward diagonal
+            if (outcomePullHandle2D[0, 0] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 0] == outcomePullHandle2D[2, 2])
+            {
+                moneyAvailable += 6;
+            }
+            //Checks upward diagonal
+            if (outcomePullHandle2D[0, 2] == outcomePullHandle2D[1, 1] && outcomePullHandle2D[0, 2] == outcomePullHandle2D[2, 0])
+            {
+                moneyAvailable += 6;
+                
+            }
+            return moneyAvailable;
         }
     }
 }
