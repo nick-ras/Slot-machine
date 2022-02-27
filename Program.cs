@@ -20,6 +20,23 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                 Console.WriteLine("");
             }
         }
+        public static void CheckHorizontal(string[,] outcomePullHandle2D, double moneyAvailable, bool youWon)
+        {
+            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
+            {
+                //Checks horizontal rows
+                if (outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 1] && outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 2])
+                {
+                    moneyAvailable += 6;
+                    youWon = true;
+                }
+                if (i == 0)
+                {
+                    //Cost of playing BettingStyle.PlayHorizontal
+                    moneyAvailable -= 3;
+                }
+            }
+        }
         static void Main(string[] args)
         {
             // PowerIsOn should run constantly
@@ -94,20 +111,7 @@ namespace CsharpSlotMachine // Note: actual namespace depends on the project nam
                             }
                             break;
                         case BettingStyle.PlayHorizontal:
-                            for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
-                            {
-                                //Checks horizontal rows
-                                if (outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 1] && outcomePullHandle2D[i, 0] == outcomePullHandle2D[i, 2])
-                                {
-                                    moneyAvailable += 6;
-                                    youWon = true;
-                                }
-                                if (i == 0)
-                                {
-                                    //Cost of playing BettingStyle.PlayHorizontal
-                                    moneyAvailable -= 3;
-                                }
-                            }
+                            CheckHorizontal(outcomePullHandle2D);
                             break;
                         case BettingStyle.PlayVerticalAndDiagonal:
                             for (int i = 0; i < outcomePullHandle2D.GetLength(0); i++)
