@@ -95,15 +95,15 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             int answerToInt = Convert.ToInt32(answerInString);
             return answerToInt;
         }
-        public static int CheckRows(GameModes mode, string[,] slotOutput)
+        public static int CheckRows(GameModes gameMode, string[,] slotOutput)
         {
-            int rowCount = 0;
-            switch (mode)
+            int countFullRows = 0;
+            switch (gameMode)
             {
                 case GameModes.PlayCenter:
                     if (slotOutput[1, 0] == slotOutput[1, 1] && slotOutput[1, 0] == slotOutput[1, 2])
                     {
-                        rowCount += 1;
+                        countFullRows += 1;
                     }
                     break;
                 case GameModes.PlayHorizontal:
@@ -112,7 +112,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                         //Checks horizontal rows
                         if (slotOutput[i, 0] == slotOutput[i, 1] && slotOutput[i, 0] == slotOutput[i, 2])
                         {
-                            rowCount += 1;
+                            countFullRows += 1;
                         }
                     }
                     break;
@@ -122,22 +122,22 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                         // checks vertical rows
                         if (slotOutput[0, i] == slotOutput[1, i] && slotOutput[0, i] == slotOutput[2, i])
                         {
-                            rowCount += 1;
+                            countFullRows += 1;
                         }
                     }
                     //Checks downward diagonal
                     if (slotOutput[0, 0] == slotOutput[1, 1] && slotOutput[0, 0] == slotOutput[2, 2])
                     {
-                        rowCount += 1;
+                        countFullRows += 1;
                     }
                     //Checks upward diagonal
                     if (slotOutput[0, 2] == slotOutput[1, 1] && slotOutput[0, 2] == slotOutput[2, 0])
                     {
-                        rowCount += 1;
+                        countFullRows += 1;
                     }
                     break;
             }
-            return rowCount;
+            return countFullRows;
         }
         public static double AddCashWinnings(string[,] slotOutput, int fullRows)
         {
