@@ -28,8 +28,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                     if (CheckCorrectFormat(answerStringFormat))
                     {
-                        int answerIntFormat = AnswerConvertToInt32(answerStringFormat);
-                        chosenGameMode = (GameModes)answerIntFormat;
+                        chosenGameMode = enumConverterGameMode(answerStringFormat);
                     }
                     else
                     {
@@ -89,11 +88,21 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 return true;
             }
             return false;
-        }
-        public static int AnswerConvertToInt32(string answerInString)
+        }        
+        public static GameModes enumConverterGameMode(string userAnswer)
         {
-            int answerToInt = Convert.ToInt32(answerInString);
-            return answerToInt;
+            if (userAnswer == "0")
+            {
+                return GameModes.PlayCenter;
+            }
+            if (userAnswer == "1")
+            {
+                return GameModes.PlayHorizontal;
+            }
+            if (userAnswer == "2")
+            {
+                return GameModes.PlayVerticalAndDiagonal;
+            }
         }
         public static int CheckRows(GameModes gameMode, string[,] slotOutput)
         {
