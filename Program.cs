@@ -21,15 +21,15 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 while (continueToPlay)
                 {
                     int fullRows;
-                    UIMethods.GameModes chosenGameMode;
+                    GameModes chosenGameMode;
                     string[,] slotOutput = new string[3, 3];
 
                     string answerStringFormat = UIMethods.ChooseGameMode();
 
-                    if (UIMethods.CheckCorrectFormat(answerStringFormat))
+                    if (CheckCorrectFormat(answerStringFormat))
                     {
-                        int answerIntFormat = UIMethods.AnswerConvertToInt32(answerStringFormat);
-                        chosenGameMode = (UIMethods.GameModes)answerIntFormat;
+                        int answerIntFormat = AnswerConvertToInt32(answerStringFormat);
+                        chosenGameMode = (GameModes)answerIntFormat;
                     }
                     else
                     {
@@ -79,18 +79,34 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             }
             return randomArray;
         }
-        public static int CheckRows(UIMethods.GameModes mode, string[,] slotOutput)
+        public static bool CheckCorrectFormat(string answerToCheck)
+        {
+            int answerInInt;
+            bool success = int.TryParse(answerToCheck, out answerInInt);
+
+            if (success && answerInInt >= 0 && answerInInt <= 2)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static int AnswerConvertToInt32(string answerInString)
+        {
+            int answerToInt = Convert.ToInt32(answerInString);
+            return answerToInt;
+        }
+        public static int CheckRows(GameModes mode, string[,] slotOutput)
         {
             int rowCount = 0;
             switch (mode)
             {
-                case UIMethods.GameModes.PlayCenter:
+                case GameModes.PlayCenter:
                     if (slotOutput[1, 0] == slotOutput[1, 1] && slotOutput[1, 0] == slotOutput[1, 2])
                     {
                         rowCount += 1;
                     }
                     break;
-                case UIMethods.GameModes.PlayHorizontal:
+                case GameModes.PlayHorizontal:
                     for (int i = 0; i < slotOutput.GetLength(0); i++)
                     {
                         //Checks horizontal rows
@@ -100,7 +116,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                         }
                     }
                     break;
-                case UIMethods.GameModes.PlayVerticalAndDiagonal:
+                case GameModes.PlayVerticalAndDiagonal:
                     for (int i = 0; i < slotOutput.GetLength(0); i++)
                     {
                         // checks vertical rows
@@ -129,18 +145,18 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             return cash;
         }
 
-        public static double CostOfGame(UIMethods.GameModes chosenGameMode)
+        public static double CostOfGame(GameModes chosenGameMode)
         {
             int moneyCost = 0;
-            if (chosenGameMode == UIMethods.GameModes.PlayCenter)
+            if (chosenGameMode == GameModes.PlayCenter)
             {
                 moneyCost += 1;
             }
-            if (chosenGameMode == UIMethods.GameModes.PlayHorizontal)
+            if (chosenGameMode == GameModes.PlayHorizontal)
             {
                 moneyCost += 3;
             }
-            if (chosenGameMode == UIMethods.GameModes.PlayVerticalAndDiagonal)
+            if (chosenGameMode == GameModes.PlayVerticalAndDiagonal)
             {
                 moneyCost += 4;
             }

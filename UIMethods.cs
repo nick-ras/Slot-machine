@@ -7,13 +7,7 @@ using System.Threading.Tasks;
 namespace Csharp_Slot_machine
 {
     internal class UIMethods
-    {
-        public enum GameModes
-        {
-            PlayCenter,
-            PlayHorizontal,
-            PlayVerticalAndDiagonal
-        }
+    {        
         public static void SetupGame()
         {
             Console.WriteLine("Welcome to the game, press enter to start");
@@ -32,23 +26,7 @@ namespace Csharp_Slot_machine
             Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
             
             return Console.ReadLine();
-        }
-        public static bool CheckCorrectFormat(string answerToCheck)
-        {
-            int answerInInt;
-            bool success = int.TryParse(answerToCheck, out answerInInt);
-
-            if (success && answerInInt >= 0 && answerInInt <= 2)
-            {
-                return true;
-            }            
-            return false;
-        }
-        public static int AnswerConvertToInt32(string answerInString)
-        {
-            int answerToInt = Convert.ToInt32(answerInString);
-            return answerToInt;
-        }
+        }           
         public static void DidHeWin(double amountFullRows)
         {
             if (amountFullRows > 0)
@@ -77,10 +55,7 @@ namespace Csharp_Slot_machine
             {
                 return false;
             }
-            else 
-            {
                 return true;
-            }
         }
         public static void ShowArray(string[,] array)
         {
