@@ -2,29 +2,22 @@
 
 namespace Csharp_Slot_machine // Note: actual namespace depends on the project name.
 {
-
     internal class Program
 
     {
-
         static void Main(string[] args)
         {
             // PowerIsOn is made to run all the time, like in casinos
             bool PowerIsOn = true;
             bool continueToPlay = true;
-
             double cashAvailable;
-
 
             while (PowerIsOn)
             {
                 UIMethods.SetupGame();
 
-                bool successEnterAmount = double.TryParse(Console.ReadLine(), out cashAvailable);
-                if (!successEnterAmount)
-                {
-                    continue;
-                }
+                cashAvailable = UIMethods.UserInputDollars();
+                
 
                 while (continueToPlay)
                 {
@@ -67,7 +60,6 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                     }
 
 
-
                     if (cashAvailable <= 4)
                     {
                         UIMethods.CashOut();
@@ -76,8 +68,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                     UIMethods.CashCount(cashAvailable);
 
-                    var playAgain = Console.ReadKey();
-                    if (playAgain.Key != ConsoleKey.Enter)
+                    if (!UIMethods.PlayAgain())
                     {
                         break;
                     }

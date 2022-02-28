@@ -14,6 +14,19 @@ namespace Csharp_Slot_machine
             PlayHorizontal,
             PlayVerticalAndDiagonal
         }
+        public static void SetupGame()
+        {
+            Console.WriteLine("Welcome to the game, press enter to start");
+            Console.ReadLine();
+        }
+        public static double UserInputDollars()
+        {
+
+            Console.WriteLine("How many dollars do you want to play for? The game will continue until you have 4$ left");
+            double amountDollars = Convert.ToDouble(Console.ReadLine());
+            return amountDollars;
+        }
+      
         public static string chooseGameMode()
         {
             Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
@@ -51,17 +64,24 @@ namespace Csharp_Slot_machine
         {
             Console.WriteLine($"You have {cash:0.##} $. Press <Enter> to continue, otherwise you will cash out");
         }
-        public static void SetupGame()
-        {
-            Console.WriteLine("Welcome to the game, press enter to start");
-            Console.ReadLine();
-            Console.WriteLine("How many dollars do you want to play for? The game will continue until you have 4$ left");
-        }
+        
         public static void YouWin()
         {
             Console.WriteLine("You won on one or more rows!");
         }
 
+        public static bool PlayAgain()
+        {
+            var playAgain = Console.ReadKey();
+            if (playAgain.Key != ConsoleKey.Enter)
+            {
+                return false;
+            }
+            else 
+            {
+                return true;
+            }
+        }
         public static void ShowArray(string[,] array)
         {
             for (int i = 0; i < array.GetLength(0); i++)
