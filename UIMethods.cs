@@ -14,12 +14,34 @@ namespace Csharp_Slot_machine
             PlayHorizontal,
             PlayVerticalAndDiagonal
         }
-        public static int chooseGameMode()
+        public static string chooseGameMode()
         {
             Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
-            int answerInInt = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine($"You chose {(UIMethods.GameModes)answerInInt}\n");
-            return answerInInt;
+            string answer = Console.ReadLine();
+            return answer;
+        }
+        public static bool checkCorrectFormat(string answerToCheck)
+        {
+            int answerInInt;
+            bool success = int.TryParse(answerToCheck, out answerInInt);
+
+            if (success && answerInInt >= 0 && answerInInt <= 2)
+            {
+                return true;
+            }            
+            return false;
+        }
+        public static int answerConvertToInt32(string answerInString)
+        {
+            int answerToInt = Convert.ToInt32(answerInString);
+            return answerToInt;
+        }
+        public static void DidHeWin(double amountFullRows)
+        {
+            if (amountFullRows > 0)
+            {
+                Console.WriteLine("You won on one of more rows!");
+            }
         }
         public static void CashOut()
         {

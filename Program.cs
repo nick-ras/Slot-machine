@@ -28,16 +28,30 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                 while (continueToPlay)
                 {
-                    int rows;
+                    int fullrows;
+                    UIMethods.GameModes chosenGameMode;
 
-                    UIMethods.GameModes chosenGameMode = (UIMethods.GameModes)UIMethods.chooseGameMode();
+                    string answerStringFormat = UIMethods.chooseGameMode();
+
+                    if (UIMethods.checkCorrectFormat(answerStringFormat))
+                    {
+                        int answerIntFormat = UIMethods.answerConvertToInt32(answerStringFormat);
+                        chosenGameMode = (UIMethods.GameModes)answerIntFormat;
+                    }
+                    else
+                    {
+                        continue;
+                    }
 
                     string[,] slotOutput = random3x3Array();
                     UIMethods.ShowArray(slotOutput);
                      
-                    rows = CheckRows(chosenGameMode, slotOutput);
+                    fullrows = CheckRows(chosenGameMode, slotOutput);
 
-                    cashAvailable = cashAvailable + AddCashWinnings(slotOutput, rows);
+                    cashAvailable = cashAvailable + AddCashWinnings(slotOutput, fullrows);
+
+                    UIMethods.DidHeWin(fullrows);
+                    
 
                     if (chosenGameMode == UIMethods.GameModes.PlayCenter)
                     {
@@ -51,7 +65,6 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                     {
                         cashAvailable -= 4;
                     }
-
 
 
 
