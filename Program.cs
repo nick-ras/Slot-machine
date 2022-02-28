@@ -46,13 +46,13 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                     switch (chosenGameMode)
                     {
                         case GameModes.PlayCenter:
-                            cashInOutDuringGame = addCashIfWonOnCent(slot3x3Output, cashAvailable);
+                            cashInOutDuringGame = changeInCashCent(slot3x3Output, cashAvailable);
                             break;
                         case GameModes.PlayHorizontal:
-                            cashInOutDuringGame = addCashIfWonOnHori(slot3x3Output, cashAvailable);
+                            cashInOutDuringGame = changeInCashHori(slot3x3Output, cashAvailable);
                             break;
                         case GameModes.PlayVerticalAndDiagonal:
-                            cashInOutDuringGame = addCashWonOnVertiDiag(slot3x3Output, cashAvailable);
+                            cashInOutDuringGame = changeInCashVertiDiag(slot3x3Output, cashAvailable);
                             break;
                     }
                    
@@ -108,7 +108,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             int answerToInt = Convert.ToInt32(answerInString);
             return answerToInt;
         }
-        public static double addCashIfWonOnCent(string[,] slot3x3Output, double cashBeforeGame)
+        public static double changeInCashCent(string[,] slot3x3Output, double cashBeforeGame)
         {
             double costAndWin = 0;
             if (slot3x3Output[1, 0] == slot3x3Output[1, 1] && slot3x3Output[1, 0] == slot3x3Output[1, 2])
@@ -120,7 +120,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             costAndWin -= 1;
             return costAndWin;
         }
-        public static double addCashIfWonOnHori(string[,] slot3x3Output, double cashAvailable)
+        public static double changeInCashHori(string[,] slot3x3Output, double cashAvailable)
         {
             double costAndWin = 0; 
             for (int i = 0; i < slot3x3Output.GetLength(0); i++)
@@ -135,7 +135,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             costAndWin -= 3;
             return costAndWin;
         }
-        public static double addCashWonOnVertiDiag(string[,] slot3x3Output, double cashAvailable)
+        public static double changeInCashVertiDiag(string[,] slot3x3Output, double cashAvailable)
         {
             double costAndWin = 0;
             for (int i = 0; i < slot3x3Output.GetLength(0); i++)
