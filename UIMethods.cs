@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Csharp_Slot_machine
 {
-    internal class UIMethods
+    public static class UIMethods
     {        
         public static void SetupGame()
         {
