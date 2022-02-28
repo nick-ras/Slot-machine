@@ -27,13 +27,13 @@ namespace Csharp_Slot_machine
             return amountDollars;
         }
       
-        public static string chooseGameMode()
+        public static string ChooseGameMode()
         {
             Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
             string answer = Console.ReadLine();
             return answer;
         }
-        public static bool checkCorrectFormat(string answerToCheck)
+        public static bool CheckCorrectFormat(string answerToCheck)
         {
             int answerInInt;
             bool success = int.TryParse(answerToCheck, out answerInInt);
@@ -44,7 +44,7 @@ namespace Csharp_Slot_machine
             }            
             return false;
         }
-        public static int answerConvertToInt32(string answerInString)
+        public static int AnswerConvertToInt32(string answerInString)
         {
             int answerToInt = Convert.ToInt32(answerInString);
             return answerToInt;

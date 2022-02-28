@@ -7,28 +7,28 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
     {
         static void Main(string[] args)
         {
-            // PowerIsOn is made to run all the time, like in casinos
+            // PowerIsOn is set to run all the time, like in casinos
             bool PowerIsOn = true;
             bool continueToPlay = true;
-            double cashAvailable;
 
             while (PowerIsOn)
             {
-                UIMethods.SetupGame();
+                double cashAvailable;
 
+                UIMethods.SetupGame();
                 cashAvailable = UIMethods.UserInputDollars();
-                
 
                 while (continueToPlay)
                 {
-                    int fullrows;
+                    int fullRows;
                     UIMethods.GameModes chosenGameMode;
+                    string[,] slotOutput = new string[3, 3];
 
-                    string answerStringFormat = UIMethods.chooseGameMode();
+                    string answerStringFormat = UIMethods.ChooseGameMode();
 
-                    if (UIMethods.checkCorrectFormat(answerStringFormat))
+                    if (UIMethods.CheckCorrectFormat(answerStringFormat))
                     {
-                        int answerIntFormat = UIMethods.answerConvertToInt32(answerStringFormat);
+                        int answerIntFormat = UIMethods.AnswerConvertToInt32(answerStringFormat);
                         chosenGameMode = (UIMethods.GameModes)answerIntFormat;
                     }
                     else
@@ -36,29 +36,16 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                         continue;
                     }
 
-                    string[,] slotOutput = random3x3Array();
+                    slotOutput = Random3x3Array();
                     UIMethods.ShowArray(slotOutput);
                      
-                    fullrows = CheckRows(chosenGameMode, slotOutput);
+                    fullRows = CheckRows(chosenGameMode, slotOutput);
 
-                    cashAvailable = cashAvailable + AddCashWinnings(slotOutput, fullrows);
+                    UIMethods.DidHeWin(fullRows);
 
-                    UIMethods.DidHeWin(fullrows);
-                    
+                    cashAvailable = cashAvailable - CostOfGame(chosenGameMode);
 
-                    if (chosenGameMode == UIMethods.GameModes.PlayCenter)
-                    {
-                        cashAvailable -= 1;
-                    }
-                    if (chosenGameMode == UIMethods.GameModes.PlayHorizontal)
-                    {
-                        cashAvailable -= 3;
-                    }
-                    if (chosenGameMode == UIMethods.GameModes.PlayVerticalAndDiagonal)
-                    {
-                        cashAvailable -= 4;
-                    }
-
+                    cashAvailable = cashAvailable + AddCashWinnings(slotOutput, fullRows);
 
                     if (cashAvailable <= 4)
                     {
@@ -76,7 +63,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             }
         }
 
-        public static string[,] random3x3Array()
+        public static string[,] Random3x3Array()
         {
             var randWord = new Random();
             List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange" };
@@ -136,10 +123,28 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             }
             return rowCount;
         }
-        public static double AddCashWinnings(string[,] slotOutput, int rows)
+        public static double AddCashWinnings(string[,] slotOutput, int fullRows)
         {
-            double cash = rows * 6;
+            double cash = fullRows * 6;
             return cash;
+        }
+
+        public static double CostOfGame(UIMethods.GameModes chosenGameMode)
+        {
+            int moneyCost = 0;
+            if (chosenGameMode == UIMethods.GameModes.PlayCenter)
+            {
+                moneyCost += 1;
+            }
+            if (chosenGameMode == UIMethods.GameModes.PlayHorizontal)
+            {
+                moneyCost += 3;
+            }
+            if (chosenGameMode == UIMethods.GameModes.PlayVerticalAndDiagonal)
+            {
+                moneyCost += 4;
+            }
+            return moneyCost;
         }
     }
 }
