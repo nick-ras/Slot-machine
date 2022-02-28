@@ -10,25 +10,29 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             // PowerIsOn is set to run all the time, like in casinos
             bool PowerIsOn = true;
             bool continueToPlay = true;
+           
 
             while (PowerIsOn)
             {
+                double cashAvailable;
                 
                 UIMethods.SetupGame();
 
-                double cashAvailable = UIMethods.UserInputDollars();
+                cashAvailable = UIMethods.UserInputDollars();
 
                 while (continueToPlay)
                 {
-                    int fullRows;
                     GameModes chosenGameMode;
-                     
+                    double cashInOutDuringGame = 0;
 
                     string answerStringFormat = UIMethods.ChooseGameMode();
 
                     if (CheckCorrectFormat(answerStringFormat))
                     {
                         int answerIntFormat = AnswerConvertToInt32(answerStringFormat);
+                        //i wanted to removed  the convert to int intermediate step
+                        //and make a method the returned a enum type GameModes,
+                        //bit it then said that all values wasnt able to be returned
                         chosenGameMode = (GameModes)answerIntFormat;
                     }
                     else
@@ -38,14 +42,23 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                     string[,] slot3x3Output = Random3x3Array();
                     UIMethods.ShowArray(slot3x3Output);
-                    
-                    fullRows = CheckRows(chosenGameMode, slot3x3Output);
 
-                    UIMethods.DidHeWin(fullRows);
+                    switch (chosenGameMode)
+                    {
+                        case GameModes.PlayCenter:
+                            cashInOutDuringGame = addCashIfWonOnCent(slot3x3Output, cashAvailable);
+                            break;
+                        case GameModes.PlayHorizontal:
+                            cashInOutDuringGame = addCashIfWonOnHori(slot3x3Output, cashAvailable);
+                            break;
+                        case GameModes.PlayVerticalAndDiagonal:
+                            cashInOutDuringGame = addCashWonOnVertiDiag(slot3x3Output, cashAvailable);
+                            break;
+                    }
+                   
+                    cashAvailable = cashAvailable+cashInOutDuringGame;
 
-                    cashAvailable = cashAvailable - CostOfGame(chosenGameMode);
-
-                    cashAvailable = cashAvailable + AddCashWinnings(slot3x3Output, fullRows);
+                    UIMethods.MessageIfUserWins(cashInOutDuringGame);
 
                     if (cashAvailable <= 4)
                     {
@@ -66,7 +79,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         public static string[,] Random3x3Array()
         {
             var randWord = new Random();
-            List<string> listOfSlotSymbols = new List<string>() { "cherrie", "grape", "orange" };
+            List<string> slot3x3Output = new List<string>() { "cherrie", "grape", "orange" };
             string[,] randomArray = new string[3, 3];
 
 
@@ -74,7 +87,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             {
                 for (int j = 0; j < randomArray.GetLength(1); j++)
                 {
-                    randomArray[i, j] = listOfSlotSymbols[randWord.Next(listOfSlotSymbols.Count)];
+                    randomArray[i, j] = slot3x3Output[randWord.Next(slot3x3Output.Count)];
                 }
             }
             return randomArray;
@@ -95,49 +108,58 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             int answerToInt = Convert.ToInt32(answerInString);
             return answerToInt;
         }
-        public static int CheckRows(GameModes gameMode, string[,] slotOutput)
+        public static double addCashIfWonOnCent(string[,] slot3x3Output, double cashBeforeGame)
         {
-            int countFullRows = 0;
-            switch (gameMode)
+            double costAndWin = 0;
+            if (slot3x3Output[1, 0] == slot3x3Output[1, 1] && slot3x3Output[1, 0] == slot3x3Output[1, 2])
             {
-                case GameModes.PlayCenter:
-                    if (slotOutput[1, 0] == slotOutput[1, 1] && slotOutput[1, 0] == slotOutput[1, 2])
-                    {
-                        countFullRows += 1;
-                    }
-                    break;
-                case GameModes.PlayHorizontal:
-                    for (int i = 0; i < slotOutput.GetLength(0); i++)
-                    {
-                        //Checks horizontal rows
-                        if (slotOutput[i, 0] == slotOutput[i, 1] && slotOutput[i, 0] == slotOutput[i, 2])
-                        {
-                            countFullRows += 1;
-                        }
-                    }
-                    break;
-                case GameModes.PlayVerticalAndDiagonal:
-                    for (int i = 0; i < slotOutput.GetLength(0); i++)
-                    {
-                        // checks vertical rows
-                        if (slotOutput[0, i] == slotOutput[1, i] && slotOutput[0, i] == slotOutput[2, i])
-                        {
-                            countFullRows += 1;
-                        }
-                    }
-                    //Checks downward diagonal
-                    if (slotOutput[0, 0] == slotOutput[1, 1] && slotOutput[0, 0] == slotOutput[2, 2])
-                    {
-                        countFullRows += 1;
-                    }
-                    //Checks upward diagonal
-                    if (slotOutput[0, 2] == slotOutput[1, 1] && slotOutput[0, 2] == slotOutput[2, 0])
-                    {
-                        countFullRows += 1;
-                    }
-                    break;
+                //adds dollars to cashAvailable if true, cost of playing included
+                costAndWin += 5;
             }
-            return countFullRows;
+            ////Cost of playing BettingStyle.PlayCenter
+            costAndWin -= 1;
+            return costAndWin;
+        }
+        public static double addCashIfWonOnHori(string[,] slot3x3Output, double cashAvailable)
+        {
+            double costAndWin = 0; 
+            for (int i = 0; i < slot3x3Output.GetLength(0); i++)
+            {
+                //Checks horizontal rows
+                if (slot3x3Output[i, 0] == slot3x3Output[i, 1] && slot3x3Output[i, 0] == slot3x3Output[i, 2])
+                {
+                    costAndWin += 6;
+                }
+            }
+            //Cost of playing BettingStyle.PlayHorizontal
+            costAndWin -= 3;
+            return costAndWin;
+        }
+        public static double addCashWonOnVertiDiag(string[,] slot3x3Output, double cashAvailable)
+        {
+            double costAndWin = 0;
+            for (int i = 0; i < slot3x3Output.GetLength(0); i++)
+            {
+                // checks vertical rows
+                if (slot3x3Output[0, i] == slot3x3Output[1, i] && slot3x3Output[0, i] == slot3x3Output[2, i])
+                {
+                    costAndWin += 6;
+                }
+            }
+            //Checks downward diagonal
+            if (slot3x3Output[0, 0] == slot3x3Output[1, 1] && slot3x3Output[0, 0] == slot3x3Output[2, 2])
+            {
+                costAndWin += 6;
+            }
+            //Checks upward diagonal
+            if (slot3x3Output[0, 2] == slot3x3Output[1, 1] && slot3x3Output[0, 2] == slot3x3Output[2, 0])
+            {
+                costAndWin += 6;
+
+            }
+            //Cost of playing BettingStyle.PlayVerticalAndDiagonal
+            costAndWin -= 4;
+            return costAndWin;
         }
         public static double AddCashWinnings(string[,] slotOutput, int fullRows)
         {

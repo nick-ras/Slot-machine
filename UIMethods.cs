@@ -27,11 +27,11 @@ namespace Csharp_Slot_machine
             
             return Console.ReadLine();
         }           
-        public static void DidHeWin(double amountFullRows)
+        public static void MessageIfUserWins(double cashInOutDuringGame)
         {
-            if (amountFullRows > 0)
+            if (cashInOutDuringGame > 0)
             {
-                Console.WriteLine("You won on one of more rows!");
+                Console.WriteLine($"You won!!");
             }
         }
         public static void CashOut()
@@ -43,11 +43,6 @@ namespace Csharp_Slot_machine
             Console.WriteLine($"You have {cash:0.##} $. Press <Enter> to continue, otherwise you will cash out");
         }
         
-        public static void YouWin()
-        {
-            Console.WriteLine("You won on one or more rows!");
-        }
-
         public static bool PlayAgain()
         {
             var playAgain = Console.ReadKey();
