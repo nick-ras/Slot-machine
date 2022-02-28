@@ -13,10 +13,10 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
             while (PowerIsOn)
             {
-                double cashAvailable;
-
+                
                 UIMethods.SetupGame();
-                cashAvailable = UIMethods.UserInputDollars();
+
+                double cashAvailable = UIMethods.UserInputDollars();
 
                 while (continueToPlay)
                 {
@@ -36,16 +36,16 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                         continue;
                     }
 
-                    string[,] slotOutput = Random3x3Array();
-                    UIMethods.ShowArray(slotOutput);
+                    string[,] slot3x3Output = Random3x3Array();
+                    UIMethods.ShowArray(slot3x3Output);
                     
-                    fullRows = CheckRows(chosenGameMode, slotOutput);
+                    fullRows = CheckRows(chosenGameMode, slot3x3Output);
 
                     UIMethods.DidHeWin(fullRows);
 
                     cashAvailable = cashAvailable - CostOfGame(chosenGameMode);
 
-                    cashAvailable = cashAvailable + AddCashWinnings(slotOutput, fullRows);
+                    cashAvailable = cashAvailable + AddCashWinnings(slot3x3Output, fullRows);
 
                     if (cashAvailable <= 4)
                     {
