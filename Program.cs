@@ -22,7 +22,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 {
                     int fullRows;
                     GameModes chosenGameMode;
-                    string[,] slotOutput = new string[3, 3];
+                     
 
                     string answerStringFormat = UIMethods.ChooseGameMode();
 
@@ -36,9 +36,9 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                         continue;
                     }
 
-                    slotOutput = Random3x3Array();
+                    string[,] slotOutput = Random3x3Array();
                     UIMethods.ShowArray(slotOutput);
-                     
+                    
                     fullRows = CheckRows(chosenGameMode, slotOutput);
 
                     UIMethods.DidHeWin(fullRows);
