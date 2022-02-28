@@ -30,8 +30,8 @@ namespace Csharp_Slot_machine
         public static string ChooseGameMode()
         {
             Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
-            string answer = Console.ReadLine();
-            return answer;
+            
+            return Console.ReadLine();
         }
         public static bool CheckCorrectFormat(string answerToCheck)
         {
