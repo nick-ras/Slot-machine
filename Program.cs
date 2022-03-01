@@ -29,11 +29,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                     if (CheckCorrectFormat(answerStringFormat))
                     {
-                        int answerIntFormat = AnswerConvertToInt32(answerStringFormat);
-                        //i wanted to removed  the convert to int intermediate step
-                        //and make a method the returned a enum type GameModes,
-                        //bit it then said that all values wasnt able to be returned
-                        chosenGameMode = (GameModes)answerIntFormat;
+                        chosenGameMode = UserInputToGameMode(answerStringFormat);
                     }
                     else
                     {
@@ -46,13 +42,13 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                     switch (chosenGameMode)
                     {
                         case GameModes.PlayCenter:
-                            cashInOutDuringGame = changeInCashCent(slot3x3Output, cashAvailable);
+                            cashInOutDuringGame = ChangeInCashCent(slot3x3Output, cashAvailable);
                             break;
                         case GameModes.PlayHorizontal:
-                            cashInOutDuringGame = changeInCashHori(slot3x3Output, cashAvailable);
+                            cashInOutDuringGame = ChangeInCashHori(slot3x3Output, cashAvailable);
                             break;
                         case GameModes.PlayVerticalAndDiagonal:
-                            cashInOutDuringGame = changeInCashVertiDiag(slot3x3Output, cashAvailable);
+                            cashInOutDuringGame = ChangeInCashVertiDiag(slot3x3Output, cashAvailable);
                             break;
                     }
                    
@@ -108,7 +104,23 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             int answerToInt = Convert.ToInt32(answerInString);
             return answerToInt;
         }
-        public static double changeInCashCent(string[,] slot3x3Output, double cashBeforeGame)
+        public static GameModes UserInputToGameMode(string answerInString)
+        {
+            int answerToInt = Convert.ToInt32(answerInString);
+
+            switch ((GameModes)answerToInt)
+            {
+                case GameModes.PlayCenter:
+                    return GameModes.PlayCenter;
+                case GameModes.PlayHorizontal:
+                    return GameModes.PlayHorizontal;
+                case GameModes.PlayVerticalAndDiagonal:
+                    return GameModes.PlayVerticalAndDiagonal;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        public static double ChangeInCashCent(string[,] slot3x3Output, double cashBeforeGame)
         {
             double costAndWin = 0;
             if (slot3x3Output[1, 0] == slot3x3Output[1, 1] && slot3x3Output[1, 0] == slot3x3Output[1, 2])
@@ -120,7 +132,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             costAndWin -= 1;
             return costAndWin;
         }
-        public static double changeInCashHori(string[,] slot3x3Output, double cashAvailable)
+        public static double ChangeInCashHori(string[,] slot3x3Output, double cashAvailable)
         {
             double costAndWin = 0; 
             for (int i = 0; i < slot3x3Output.GetLength(0); i++)
@@ -135,7 +147,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             costAndWin -= 3;
             return costAndWin;
         }
-        public static double changeInCashVertiDiag(string[,] slot3x3Output, double cashAvailable)
+        public static double ChangeInCashVertiDiag(string[,] slot3x3Output, double cashAvailable)
         {
             double costAndWin = 0;
             for (int i = 0; i < slot3x3Output.GetLength(0); i++)
@@ -160,29 +172,6 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             //Cost of playing BettingStyle.PlayVerticalAndDiagonal
             costAndWin -= 4;
             return costAndWin;
-        }
-        public static double AddCashWinnings(string[,] slotOutput, int fullRows)
-        {
-            double cash = fullRows * 6;
-            return cash;
-        }
-
-        public static double CostOfGame(GameModes chosenGameMode)
-        {
-            int moneyCost = 0;
-            if (chosenGameMode == GameModes.PlayCenter)
-            {
-                moneyCost += 1;
-            }
-            if (chosenGameMode == GameModes.PlayHorizontal)
-            {
-                moneyCost += 3;
-            }
-            if (chosenGameMode == GameModes.PlayVerticalAndDiagonal)
-            {
-                moneyCost += 4;
-            }
-            return moneyCost;
         }
     }
 }
