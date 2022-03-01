@@ -19,6 +19,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 UIMethods.SetupGame();
 
                 cashAvailable = UIMethods.UserInputDollars();
+                
 
                 while (continueToPlay)
                 {
@@ -85,12 +86,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 }
             }
             return randomArray;
-        }        
-        public static int AnswerConvertToInt32(string answerInString)
-        {
-            int answerToInt = Convert.ToInt32(answerInString);
-            return answerToInt;
-        }
+        }     
         public static GameModes UserInputToGameMode(string answerInString)
         {            
             switch (answerInString)
