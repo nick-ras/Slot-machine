@@ -10,24 +10,28 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             // PowerIsOn is set to run all the time, like in casinos
             bool PowerIsOn = true;
             bool continueToPlay = true;
-           
+
 
             while (PowerIsOn)
             {
                 double cashAvailable;
-                
+
                 UIMethods.SetupGame();
 
-                UIMethods.UserInputString();
+                string answer = UIMethods.UserInputString();
 
-
-                if (ReturnStringAsDoubleAnd0IfNotDouble(UIMethods.UserInputString()) < 4)
+                if (!IsDouble(answer))
                 {
                     continue;
                 }
-                
-                cashAvailable = ReturnStringAsDoubleAnd0IfNotDouble(UIMethods.UserInputString());
+                if (ConvertToDouble(answer) < 4)
+                {
+                    Console.WriteLine("Amount must be 4 or above");
+                    continue;
+                }
+                        
 
+                cashAvailable = ConvertToDouble(answer);
 
                 while (continueToPlay)
                 {
@@ -44,7 +48,12 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                     }
 
                     string[,] slot3x3Output = Random3x3Array();
-                    UIMethods.ShowArray(slot3x3Output);
+
+                    /* I calculated the change of getting a full centerrow. 
+                    double chance = Math.Pow(slot3x3Output.GetLength(0), slot3x3Output.GetLength(1)) * 4 // 4 is number of symbols like a cherry or orange
+                    You could automatize this for all GameModes, and give 80% payback if the user won (rest is for the house). You could make a class
+                    with methods that did all the calculation. For example there is a much lower chance you will get 2
+                    full rows when you play all horizontal rows, but the reward would be much higher too */
 
                     switch (chosenGameMode)
                     {
@@ -58,8 +67,8 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                             cashInOutDuringGame = changeInCashVertiDiag(slot3x3Output, cashAvailable);
                             break;
                     }
-                   
-                    cashAvailable = cashAvailable+cashInOutDuringGame;
+
+                    cashAvailable = cashAvailable + cashInOutDuringGame;
 
                     UIMethods.MessageIfUserWins(cashInOutDuringGame);
 
@@ -94,17 +103,18 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 }
             }
             return randomArray;
-        }     
-        public static double ReturnStringAsDoubleAnd0IfNotDouble(string inputString)
-        {
-            double inputAsDouble;
-            bool isCorrectInput = double.TryParse(inputString, out inputAsDouble);
-            if (!isCorrectInput)
-            {
-                inputAsDouble = 0;
-            }
-            return inputAsDouble;
         }
+        public static bool IsDouble(string inputString)
+        {
+            double notUsed;
+            bool isCorrectInput = double.TryParse(inputString, out notUsed);
+
+            return isCorrectInput;
+        }
+        public static double ConvertToDouble(string inputString)
+            {
+                return Convert.ToDouble(inputString);
+            }
         public static GameModes UserInputToGameMode(string answerInString)
         {            
             switch (answerInString)
