@@ -10,6 +10,7 @@ namespace Csharp_Slot_machine
     {
         PlayCenter,
         PlayHorizontal,
-        PlayVerticalAndDiagonal
+        PlayVerticalAndDiagonal,
+        Invalid
     }
 }

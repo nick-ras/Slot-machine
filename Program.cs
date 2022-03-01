@@ -18,6 +18,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 
                 UIMethods.SetupGame();
 
+
                 cashAvailable = UIMethods.UserInputDollars();
 
                 while (continueToPlay)
@@ -27,13 +28,13 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                     string answerStringFormat = UIMethods.ChooseGameMode();
 
-                    if (CheckCorrectFormat(answerStringFormat))
+                    if (UserInputToGameMode(answerStringFormat) == GameModes.Invalid)
                     {
-                        chosenGameMode = UserInputToGameMode(answerStringFormat);
+                        continue;
                     }
                     else
                     {
-                        continue;
+                        chosenGameMode = UserInputToGameMode(answerStringFormat); 
                     }
 
                     string[,] slot3x3Output = Random3x3Array();
@@ -42,13 +43,13 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                     switch (chosenGameMode)
                     {
                         case GameModes.PlayCenter:
-                            cashInOutDuringGame = ChangeInCashCent(slot3x3Output, cashAvailable);
+                            cashInOutDuringGame = changeInCashCent(slot3x3Output, cashAvailable);
                             break;
                         case GameModes.PlayHorizontal:
-                            cashInOutDuringGame = ChangeInCashHori(slot3x3Output, cashAvailable);
+                            cashInOutDuringGame = changeInCashHori(slot3x3Output, cashAvailable);
                             break;
                         case GameModes.PlayVerticalAndDiagonal:
-                            cashInOutDuringGame = ChangeInCashVertiDiag(slot3x3Output, cashAvailable);
+                            cashInOutDuringGame = changeInCashVertiDiag(slot3x3Output, cashAvailable);
                             break;
                     }
                    
@@ -87,40 +88,28 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 }
             }
             return randomArray;
-        }
-        public static bool CheckCorrectFormat(string answerToCheck)
-        {
-            int answerInInt;
-            bool success = int.TryParse(answerToCheck, out answerInInt);
-
-            if (success && answerInInt >= 0 && answerInInt <= 2)
-            {
-                return true;
-            }
-            return false;
-        }
+        }        
         public static int AnswerConvertToInt32(string answerInString)
         {
             int answerToInt = Convert.ToInt32(answerInString);
             return answerToInt;
         }
         public static GameModes UserInputToGameMode(string answerInString)
-        {
-            int answerToInt = Convert.ToInt32(answerInString);
-
-            switch ((GameModes)answerToInt)
+        {            
+            switch (answerInString)
             {
-                case GameModes.PlayCenter:
+                case "0":
                     return GameModes.PlayCenter;
-                case GameModes.PlayHorizontal:
+                case "1":
                     return GameModes.PlayHorizontal;
-                case GameModes.PlayVerticalAndDiagonal:
+                case "2":
                     return GameModes.PlayVerticalAndDiagonal;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    return GameModes.Invalid;
+                    
             }
         }
-        public static double ChangeInCashCent(string[,] slot3x3Output, double cashBeforeGame)
+        public static double changeInCashCent(string[,] slot3x3Output, double cashBeforeGame)
         {
             double costAndWin = 0;
             if (slot3x3Output[1, 0] == slot3x3Output[1, 1] && slot3x3Output[1, 0] == slot3x3Output[1, 2])
@@ -132,7 +121,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             costAndWin -= 1;
             return costAndWin;
         }
-        public static double ChangeInCashHori(string[,] slot3x3Output, double cashAvailable)
+        public static double changeInCashHori(string[,] slot3x3Output, double cashAvailable)
         {
             double costAndWin = 0; 
             for (int i = 0; i < slot3x3Output.GetLength(0); i++)
@@ -147,7 +136,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             costAndWin -= 3;
             return costAndWin;
         }
-        public static double ChangeInCashVertiDiag(string[,] slot3x3Output, double cashAvailable)
+        public static double changeInCashVertiDiag(string[,] slot3x3Output, double cashAvailable)
         {
             double costAndWin = 0;
             for (int i = 0; i < slot3x3Output.GetLength(0); i++)
