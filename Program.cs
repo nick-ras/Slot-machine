@@ -49,12 +49,6 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                     string[,] slot3x3Output = Random3x3Array();
 
-                    /* I calculated the change of getting a full centerrow. 
-                    double chance = Math.Pow(slot3x3Output.GetLength(0), slot3x3Output.GetLength(1)) * 4 // 4 is number of symbols like a cherry or orange
-                    You could automatize this for all GameModes, and give 80% payback if the user won (rest is for the house). You could make a class
-                    with methods that did all the calculation. For example there is a much lower chance you will get 2
-                    full rows when you play all horizontal rows, but the reward would be much higher too */
-
                     switch (chosenGameMode)
                     {
                         case GameModes.PlayCenter:
