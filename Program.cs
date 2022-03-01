@@ -18,8 +18,16 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 
                 UIMethods.SetupGame();
 
-                cashAvailable = UIMethods.UserInputDollars();
+                UIMethods.UserInputString();
+
+
+                if (ReturnStringAsDoubleAnd0IfNotDouble(UIMethods.UserInputString()) < 4)
+                {
+                    continue;
+                }
                 
+                cashAvailable = ReturnStringAsDoubleAnd0IfNotDouble(UIMethods.UserInputString());
+
 
                 while (continueToPlay)
                 {
@@ -87,6 +95,16 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             }
             return randomArray;
         }     
+        public static double ReturnStringAsDoubleAnd0IfNotDouble(string inputString)
+        {
+            double inputAsDouble;
+            bool isCorrectInput = double.TryParse(inputString, out inputAsDouble);
+            if (!isCorrectInput)
+            {
+                inputAsDouble = 0;
+            }
+            return inputAsDouble;
+        }
         public static GameModes UserInputToGameMode(string answerInString)
         {            
             switch (answerInString)

@@ -13,12 +13,10 @@ namespace Csharp_Slot_machine
             Console.WriteLine("Welcome to the game, press enter to start");
             Console.ReadLine();
         }
-        public static double UserInputDollars()
+        public static string UserInputString()
         {
-
-            Console.WriteLine("How many dollars do you want to play for? The game will continue until you have 4$ left");
-            double amountDollars = Convert.ToDouble(Console.ReadLine());
-            return amountDollars;
+            Console.WriteLine("How many dollars do you want to play for? The game will continue until you have 4$ left");            
+            return Console.ReadLine();
         }
       
         public static string ChooseGameMode()
