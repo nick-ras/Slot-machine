@@ -18,7 +18,6 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 
                 UIMethods.SetupGame();
 
-
                 cashAvailable = UIMethods.UserInputDollars();
 
                 while (continueToPlay)
@@ -28,13 +27,11 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                     string answerStringFormat = UIMethods.ChooseGameMode();
 
-                    if (UserInputToGameMode(answerStringFormat) == GameModes.Invalid)
+                    chosenGameMode = UserInputToGameMode(answerStringFormat);
+
+                    if (chosenGameMode == GameModes.Invalid)
                     {
                         continue;
-                    }
-                    else
-                    {
-                        chosenGameMode = UserInputToGameMode(answerStringFormat); 
                     }
 
                     string[,] slot3x3Output = Random3x3Array();
