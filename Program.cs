@@ -5,6 +5,10 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
     internal class Program
 
     {
+        /// <summary>
+        /// Where programexecution starts
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             // PowerIsOn is set to run all the time, like in casinos
@@ -69,9 +73,9 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             }
         }
         /// <summary>
-        /// creates 2D array with randomly generated picked elements from slotValues list
+        /// creates 2D array with randomly generated elements from an internal list
         /// </summary>
-        /// <returns></returns>
+        /// <returns>2D array with 3 rows and 3 columns</returns> 
         public static string[,] Random3x3Array()
         {
             var randWord = new Random();
@@ -92,21 +96,26 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// check if inputString can be converted to a double
         /// </summary>
         /// <param name="inputString"></param>
-        /// <returns></returns>
+        /// <returns>true if string can be converted to double</returns>
         public static bool IsDouble(string inputString)
         {
             bool isCorrectInput = double.TryParse(inputString, out _);
             return isCorrectInput;
         }
+        /// <summary>
+        /// Convert string to double
+        /// </summary>
+        /// <param name="inputString"></param>
+        /// <returns>true if user input could be converted to double</returns>
         public static double ConvertToDouble(string inputString)
         {
             return Convert.ToDouble(inputString);
-        }        
+        }
         /// <summary>
-        ///  check if the 3 values in second row has the same elements
+        /// Check if the 3 values in second row has the same elements
         /// </summary>
-        /// <param name="slotValues"></param>Is the randomly generated slotValues 2D array
-        /// <returns></returns> The result of cost of game + added $ of winning
+        /// <param name="slotValues">Is the randomly generated slotValues 2D array</param>
+        /// <returns>Winnings and costs og round</returns> 
         public static double ChangeInCashCent(string[,] slotValues)
         {
             double costAndWin = 0;
@@ -118,10 +127,10 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             return costAndWin;
         }
         /// <summary>
-        ///  check if the 3 values in any of the rows has the same elements
+        /// Checks if the 3 values in any of the rows has the same elements
         /// </summary>
-        /// <param name="slotValues"></param>Is the randomly generated slotValues 2D array
-        /// <returns></returns> The result of cost of game + added $ of winning
+        /// <param name="slotValues">Is the randomly generated slotValues 2D array</param>
+        /// <returns>Winnings and costs og round</returns> 
         public static double ChangeInCashHori(string[,] slotValues)
         {
             double costAndWin = 0; 
@@ -138,10 +147,10 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             return costAndWin;
         }
         /// <summary>
-        ///  check if the 3 values in any of the columns has the same elements
+        /// Check if the 3 values in any of the columns has the same elements
         /// </summary>
-        /// <param name="slotValues"></param>Is the randomly generated slotValues 2D array
-        /// <returns></returns> The result of cost of game + added $ of winning
+        /// <param name="slotValues">Is the randomly generated slotValues 2D array</param>
+        /// <returns>Winnings and costs og round</returns> 
         public static double ChangeInCashVertiDiag(string[,] slotValues)
         {
             double costAndWin = 0;
@@ -168,6 +177,12 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             costAndWin -= 4;
             return costAndWin;
         }
+        /// <summary>
+        /// Takes in a GameMode type, and executes the method that handles the winnings and loses related to that enumtype
+        /// </summary>
+        /// <param name="chosenGameMode"></param>
+        /// <param name="slotValues"></param>
+        /// <returns>The return values of the method chosen in the switch statement</returns> 
         public static double CashCostAndWin(GameModes chosenGameMode, string[,] slotValues)
         {
             switch (chosenGameMode)
@@ -183,9 +198,9 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             }
         }
         /// <summary>
-        /// Return a string if parameter value is above 0
+        /// Check if the user has more or less $from when he started the round
         /// </summary>
-        /// <param name="cashInOutDuringGame"></param>The result of cost of game + added $ of winning
+        /// <param name="cashInOutDuringGame">cost + winnings of round</param>
         public static void MessageIfUserWins(double cashInOutDuringGame)
         {
             if (cashInOutDuringGame > 0)
