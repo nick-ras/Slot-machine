@@ -22,7 +22,7 @@ namespace Csharp_Slot_machine
         /// <summary>
         /// Asks the user to enter the start amount the user wants to put into machine
         /// </summary>
-        /// <returns>the input</returns> 
+        /// <returns>the user input as string</returns> 
         public static string GetDollarValueString()
         {
             Console.WriteLine("How many dollars do you want to play for? The game will continue until you have 4$ left");            
