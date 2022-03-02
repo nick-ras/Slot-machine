@@ -8,30 +8,44 @@ namespace Csharp_Slot_machine
 {
     public static class UIMethods
     {        
-        public static void SetupGame()
+        public static void GameWelcome()
         {
             Console.WriteLine("Welcome to the game, press enter to start");
             Console.ReadLine();
         }
-        public static string UserInputString()
+        public static string GetDollarValueString()
         {
             Console.WriteLine("How many dollars do you want to play for? The game will continue until you have 4$ left");            
             return Console.ReadLine();
         }
       
-        public static string ChooseGameMode()
+        public static string GetGameModeString()
         {
             Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
             
             return Console.ReadLine();
-        }           
-        public static void MessageIfUserWins(double cashInOutDuringGame)
+        }
+        public static GameModes UserInputToGameMode(string answerInString)
         {
-            if (cashInOutDuringGame > 0)
+            switch (answerInString)
             {
-                Console.WriteLine($"You won!!");
+                case "0":
+                    return GameModes.PlayCenter;
+                case "1":
+                    return GameModes.PlayHorizontal;
+                case "2":
+                    return GameModes.PlayVerticalAndDiagonal;
+                default:
+                    return GameModes.Invalid;
+
             }
         }
+        public static GameModes GetGameMode()
+        {
+            var x = GetGameModeString();
+            return UserInputToGameMode(x);
+        }
+
         public static void CashOut()
         {
             Console.WriteLine("You less than 4 $ left, the game stops and gives you the rest of the amount back");

@@ -15,56 +15,43 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             while (PowerIsOn)
             {
                 double cashAvailable;
+                GameModes chosenGameMode;
 
-                UIMethods.SetupGame();
+                UIMethods.GameWelcome();
 
-                string answer = UIMethods.UserInputString();
+                string answerCashAmount = UIMethods.GetDollarValueString();
 
-                if (!IsDouble(answer))
+                if (!IsDouble(answerCashAmount))
                 {
                     continue;
                 }
-                if (ConvertToDouble(answer) < 4)
+                if (ConvertToDouble(answerCashAmount) < 4)
                 {
                     Console.WriteLine("Amount must be 4 or above");
                     continue;
                 }
-                        
 
-                cashAvailable = ConvertToDouble(answer);
+                cashAvailable = ConvertToDouble(answerCashAmount);
 
                 while (continueToPlay)
                 {
-                    GameModes chosenGameMode;
                     double cashInOutDuringGame = 0;
 
-                    string answerStringFormat = UIMethods.ChooseGameMode();
-
-                    chosenGameMode = UserInputToGameMode(answerStringFormat);
+                    chosenGameMode = UIMethods.GetGameMode();
 
                     if (chosenGameMode == GameModes.Invalid)
                     {
                         continue;
                     }
 
-                    string[,] slot3x3Output = Random3x3Array();
+                    string[,] slotValues = Random3x3Array();
+                    UIMethods.ShowArray(slotValues);
 
-                    switch (chosenGameMode)
-                    {
-                        case GameModes.PlayCenter:
-                            cashInOutDuringGame = changeInCashCent(slot3x3Output, cashAvailable);
-                            break;
-                        case GameModes.PlayHorizontal:
-                            cashInOutDuringGame = changeInCashHori(slot3x3Output, cashAvailable);
-                            break;
-                        case GameModes.PlayVerticalAndDiagonal:
-                            cashInOutDuringGame = changeInCashVertiDiag(slot3x3Output, cashAvailable);
-                            break;
-                    }
+                    cashInOutDuringGame = CashCostAndWin(chosenGameMode, slotValues);
 
                     cashAvailable = cashAvailable + cashInOutDuringGame;
 
-                    UIMethods.MessageIfUserWins(cashInOutDuringGame);
+                    MessageIfUserWins(cashInOutDuringGame);
 
                     if (cashAvailable <= 4)
                     {
@@ -81,11 +68,14 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                 }
             }
         }
-
+        /// <summary>
+        /// creates 2D array with randomly generated picked elements from slotValues list
+        /// </summary>
+        /// <returns></returns>
         public static string[,] Random3x3Array()
         {
             var randWord = new Random();
-            List<string> slot3x3Output = new List<string>() { "cherrie", "grape", "orange" };
+            List<string> slotValues = new List<string>() { "cherrie", "grape", "orange" };
             string[,] randomArray = new string[3, 3];
 
 
@@ -93,56 +83,52 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             {
                 for (int j = 0; j < randomArray.GetLength(1); j++)
                 {
-                    randomArray[i, j] = slot3x3Output[randWord.Next(slot3x3Output.Count)];
+                    randomArray[i, j] = slotValues[randWord.Next(slotValues.Count)];
                 }
             }
             return randomArray;
         }
+        /// <summary>
+        /// check if inputString can be converted to a double
+        /// </summary>
+        /// <param name="inputString"></param>
+        /// <returns></returns>
         public static bool IsDouble(string inputString)
         {
-            double notUsed;
-            bool isCorrectInput = double.TryParse(inputString, out notUsed);
-
+            bool isCorrectInput = double.TryParse(inputString, out _);
             return isCorrectInput;
         }
         public static double ConvertToDouble(string inputString)
-            {
-                return Convert.ToDouble(inputString);
-            }
-        public static GameModes UserInputToGameMode(string answerInString)
-        {            
-            switch (answerInString)
-            {
-                case "0":
-                    return GameModes.PlayCenter;
-                case "1":
-                    return GameModes.PlayHorizontal;
-                case "2":
-                    return GameModes.PlayVerticalAndDiagonal;
-                default:
-                    return GameModes.Invalid;
-                    
-            }
-        }
-        public static double changeInCashCent(string[,] slot3x3Output, double cashBeforeGame)
+        {
+            return Convert.ToDouble(inputString);
+        }        
+        /// <summary>
+        ///  check if the 3 values in second row has the same elements
+        /// </summary>
+        /// <param name="slotValues"></param>Is the randomly generated slotValues 2D array
+        /// <returns></returns> The result of cost of game + added $ of winning
+        public static double ChangeInCashCent(string[,] slotValues)
         {
             double costAndWin = 0;
-            if (slot3x3Output[1, 0] == slot3x3Output[1, 1] && slot3x3Output[1, 0] == slot3x3Output[1, 2])
+            if (slotValues[1, 0] == slotValues[1, 1] && slotValues[1, 0] == slotValues[1, 2])
             {
-                //adds dollars to cashAvailable if true, cost of playing included
                 costAndWin += 5;
             }
-            ////Cost of playing BettingStyle.PlayCenter
             costAndWin -= 1;
             return costAndWin;
         }
-        public static double changeInCashHori(string[,] slot3x3Output, double cashAvailable)
+        /// <summary>
+        ///  check if the 3 values in any of the rows has the same elements
+        /// </summary>
+        /// <param name="slotValues"></param>Is the randomly generated slotValues 2D array
+        /// <returns></returns> The result of cost of game + added $ of winning
+        public static double ChangeInCashHori(string[,] slotValues)
         {
             double costAndWin = 0; 
-            for (int i = 0; i < slot3x3Output.GetLength(0); i++)
+            for (int i = 0; i < slotValues.GetLength(0); i++)
             {
                 //Checks horizontal rows
-                if (slot3x3Output[i, 0] == slot3x3Output[i, 1] && slot3x3Output[i, 0] == slot3x3Output[i, 2])
+                if (slotValues[i, 0] == slotValues[i, 1] && slotValues[i, 0] == slotValues[i, 2])
                 {
                     costAndWin += 6;
                 }
@@ -151,24 +137,29 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             costAndWin -= 3;
             return costAndWin;
         }
-        public static double changeInCashVertiDiag(string[,] slot3x3Output, double cashAvailable)
+        /// <summary>
+        ///  check if the 3 values in any of the columns has the same elements
+        /// </summary>
+        /// <param name="slotValues"></param>Is the randomly generated slotValues 2D array
+        /// <returns></returns> The result of cost of game + added $ of winning
+        public static double ChangeInCashVertiDiag(string[,] slotValues)
         {
             double costAndWin = 0;
-            for (int i = 0; i < slot3x3Output.GetLength(0); i++)
+            for (int i = 0; i < slotValues.GetLength(0); i++)
             {
                 // checks vertical rows
-                if (slot3x3Output[0, i] == slot3x3Output[1, i] && slot3x3Output[0, i] == slot3x3Output[2, i])
+                if (slotValues[0, i] == slotValues[1, i] && slotValues[0, i] == slotValues[2, i])
                 {
                     costAndWin += 6;
                 }
             }
             //Checks downward diagonal
-            if (slot3x3Output[0, 0] == slot3x3Output[1, 1] && slot3x3Output[0, 0] == slot3x3Output[2, 2])
+            if (slotValues[0, 0] == slotValues[1, 1] && slotValues[0, 0] == slotValues[2, 2])
             {
                 costAndWin += 6;
             }
             //Checks upward diagonal
-            if (slot3x3Output[0, 2] == slot3x3Output[1, 1] && slot3x3Output[0, 2] == slot3x3Output[2, 0])
+            if (slotValues[0, 2] == slotValues[1, 1] && slotValues[0, 2] == slotValues[2, 0])
             {
                 costAndWin += 6;
 
@@ -176,6 +167,31 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             //Cost of playing BettingStyle.PlayVerticalAndDiagonal
             costAndWin -= 4;
             return costAndWin;
+        }
+        public static double CashCostAndWin(GameModes chosenGameMode, string[,] slotValues)
+        {
+            switch (chosenGameMode)
+            {
+                case GameModes.PlayCenter:
+                    return ChangeInCashCent(slotValues);
+                case GameModes.PlayHorizontal:
+                    return ChangeInCashHori(slotValues);
+                case GameModes.PlayVerticalAndDiagonal:
+                    return ChangeInCashVertiDiag(slotValues);
+                default:
+                    return 0;
+            }
+        }
+        /// <summary>
+        /// Return a string if parameter value is above 0
+        /// </summary>
+        /// <param name="cashInOutDuringGame"></param>The result of cost of game + added $ of winning
+        public static void MessageIfUserWins(double cashInOutDuringGame)
+        {
+            if (cashInOutDuringGame > 0)
+            {
+                Console.WriteLine("You won!!");
+            }
         }
     }
 }
