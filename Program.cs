@@ -6,7 +6,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
     {
         /// <summary>
-        /// Where programexecution starts
+        /// Entry point
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
@@ -115,7 +115,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// Check if the 3 values in second row has the same elements
         /// </summary>
         /// <param name="slotValues">Is the randomly generated slotValues 2D array</param>
-        /// <returns>Winnings and costs og round</returns> 
+        /// <returns>Winnings and costs of round</returns> 
         public static double ChangeInCashCent(string[,] slotValues)
         {
             double costAndWin = 0;
@@ -130,7 +130,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// Checks if the 3 values in any of the rows has the same elements
         /// </summary>
         /// <param name="slotValues">Is the randomly generated slotValues 2D array</param>
-        /// <returns>Winnings and costs og round</returns> 
+        /// <returns>Winnings and costs of round</returns> 
         public static double ChangeInCashHori(string[,] slotValues)
         {
             double costAndWin = 0; 
@@ -150,7 +150,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// Check if the 3 values in any of the columns has the same elements
         /// </summary>
         /// <param name="slotValues">Is the randomly generated slotValues 2D array</param>
-        /// <returns>Winnings and costs og round</returns> 
+        /// <returns>Winnings and costs of round</returns> 
         public static double ChangeInCashVertiDiag(string[,] slotValues)
         {
             double costAndWin = 0;
