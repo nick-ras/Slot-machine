@@ -106,7 +106,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// Convert string to double
         /// </summary>
         /// <param name="inputString"></param>
-        /// <returns>true if user input could be converted to double</returns>
+        /// <returns>converts string to double</returns>
         public static double ConvertToDouble(string inputString)
         {
             return Convert.ToDouble(inputString);
