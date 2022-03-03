@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Csharp_Slot_machine
 {
     /// <summary>
-    /// all userinterface related methods
+    /// The class contains all userinterface related methods
     /// </summary>
     public static class UIMethods
     {        
         /// <summary>
-        /// Welcomes the user and asks the user to press enter in order to start the game
+        /// Welcomes the user and continues when user presses enter key
         /// </summary>
         public static void GameWelcome()
         {
@@ -23,7 +23,7 @@ namespace Csharp_Slot_machine
         /// Asks the user to enter the start amount the user wants to put into machine
         /// </summary>
         /// <returns>the user input as string</returns> 
-        public static string GetDollarValueString()
+        public static string EnterAmountString()
         {
             Console.WriteLine("How many dollars do you want to play for? The game will continue until you have 4$ left");            
             return Console.ReadLine();
@@ -31,21 +31,21 @@ namespace Csharp_Slot_machine
         /// <summary>
         /// Asks the user to chose a gamemode, and returns it in string format
         /// </summary>
-        /// <returns>the input</returns> 
-        public static string GetGameModeString()
+        /// <returns>The answer in string format</returns> 
+        public static string ChoiceGameModeString()
         {
             Console.WriteLine("\"0\" = play center, \"1\" = play all horizontal lines, \"2\" = play all vertical and diagonal lines");
             
             return Console.ReadLine();
         }
         /// <summary>
-        /// convert string to enum
+        /// Using a switch statement to convert a string to a gamemode constant
         /// </summary>
         /// <param name="answerInString"></param>
-        /// <returns>The chosen GameMode by user</returns> 
-        public static GameModes UserInputToGameMode(string answerInString)
+        /// <returns>A constant of the enum GameModes</returns> 
+        public static GameModes UserInputToGameMode(string choiceGameModeString)
         {
-            switch (answerInString)
+            switch (choiceGameModeString)
             {
                 case "0":
                     return GameModes.PlayCenter;
@@ -59,21 +59,36 @@ namespace Csharp_Slot_machine
             }
         }
         /// <summary>
-        /// Uses helper method "UserInputToGameMode" to convert userinput to a gamemode
+        /// Asks user for a gamemode
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A constant og the enum GameModes</returns>
         public static GameModes GetGameMode()
         {
-            var x = GetGameModeString();
+            var x = ChoiceGameModeString();
             return UserInputToGameMode(x);
+            
         }
-        public static void CashOut()
+        /// <summary>
+        /// Writes a gamestop statement
+        /// </summary>
+        public static void GameStop()
         {
             Console.WriteLine("You less than 4 $ left, the game stops and gives you the rest of the amount back");
         }
-        public static void CashCount(double cash)
+        /// <summary>
+        /// Writes a statement of how much money user has left
+        /// </summary>
+        /// <param name="cash"></param>
+        public static void CashAmount(double cash)
         {
-            Console.WriteLine($"You have {cash:0.##} $. Press <Enter> to continue, otherwise you will cash out");
+            Console.Write($"You have {cash:0.##} $");
+        }
+        /// <summary>
+        /// Writes a win statement
+        /// </summary>
+        public static void WinStatement()
+        {
+            Console.WriteLine("You won!!");
         }
         /// <summary>
         /// takes in readkey from user, and only if user presses enter, then it returns true
@@ -81,6 +96,7 @@ namespace Csharp_Slot_machine
         /// <returns></returns>
         public static bool PlayAgain()
         {
+            Console.WriteLine("Press <Enter> to continue, otherwise you will cash out");
             var playAgain = Console.ReadKey();
             if (playAgain.Key != ConsoleKey.Enter)
             {
@@ -89,9 +105,10 @@ namespace Csharp_Slot_machine
                 return true;
         }
         /// <summary>
-        /// takes in an 2D array and prints it
+        /// Iterates through each element in array
         /// </summary>
-        /// <param name="slotValues">writes the randomly generated array</param>
+        /// <param name="slotValues"></param>
+        /// <returns>Prints each row on a new line</returns> 
         public static void ShowArray(string[,] slotValues)
         {
             for (int i = 0; i < slotValues.GetLength(0); i++)

@@ -23,19 +23,19 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                 UIMethods.GameWelcome();
 
-                string answerCashAmount = UIMethods.GetDollarValueString();
+                string answerAmountString = UIMethods.EnterAmountString();
 
-                if (!IsDouble(answerCashAmount))
+                if (!ConvertToDouble(answerAmountString))
                 {
                     continue;
                 }
-                if (ConvertToDouble(answerCashAmount) < 4)
+                if (Convert.ToDouble(answerAmountString) < 4)
                 {
                     Console.WriteLine("Amount must be 4 or above");
                     continue;
                 }
 
-                cashAvailable = ConvertToDouble(answerCashAmount);
+                cashAvailable = Convert.ToDouble(answerAmountString);
 
                 while (continueToPlay)
                 {
@@ -55,15 +55,19 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
 
                     cashAvailable = cashAvailable + cashInOutDuringGame;
 
-                    MessageIfUserWins(cashInOutDuringGame);
+                    
+                    if (cashInOutDuringGame > 0)
+                    {
+                        UIMethods.WinStatement();
+                    }
 
                     if (cashAvailable <= 4)
                     {
-                        UIMethods.CashOut();
+                        UIMethods.GameStop();
                         break;
                     }
 
-                    UIMethods.CashCount(cashAvailable);
+                    UIMethods.CashAmount(cashAvailable);
 
                     if (!UIMethods.PlayAgain())
                     {
@@ -95,22 +99,14 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// <summary>
         /// check if inputString can be converted to a double
         /// </summary>
-        /// <param name="inputString"></param>
+        /// <param name="inputString">Users answer in string format</param>
         /// <returns>true if string can be converted to double</returns>
-        public static bool IsDouble(string inputString)
+        public static bool ConvertToDouble(string inputString)
         {
             bool isCorrectInput = double.TryParse(inputString, out _);
             return isCorrectInput;
         }
-        /// <summary>
-        /// Convert string to double
-        /// </summary>
-        /// <param name="inputString"></param>
-        /// <returns>converts string to double</returns>
-        public static double ConvertToDouble(string inputString)
-        {
-            return Convert.ToDouble(inputString);
-        }
+        
         /// <summary>
         /// Check if the 3 values in second row has the same elements
         /// </summary>
@@ -178,11 +174,11 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
             return costAndWin;
         }
         /// <summary>
-        /// Takes in a GameMode type, and executes the method that handles the winnings and loses related to that enumtype
+        /// Takes in a gamemode, and executes the method that handles the winnings and loses related to that gamemode
         /// </summary>
         /// <param name="chosenGameMode"></param>
         /// <param name="slotValues"></param>
-        /// <returns>The return values of the method chosen in the switch statement</returns> 
+        /// <returns>The combined cost and winnings of the round</returns> 
         public static double CashCostAndWin(GameModes chosenGameMode, string[,] slotValues)
         {
             switch (chosenGameMode)
@@ -197,16 +193,6 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                     return 0;
             }
         }
-        /// <summary>
-        /// Check if the user has more or less $from when he started the round
-        /// </summary>
-        /// <param name="cashInOutDuringGame">cost + winnings of round</param>
-        public static void MessageIfUserWins(double cashInOutDuringGame)
-        {
-            if (cashInOutDuringGame > 0)
-            {
-                Console.WriteLine("You won!!");
-            }
-        }
+        
     }
 }
