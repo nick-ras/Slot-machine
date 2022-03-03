@@ -49,6 +49,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
                     }
 
                     string[,] slotValues = Random3x3Array();
+
                     UIMethods.ShowArray(slotValues);
 
                     cashInOutDuringGame = CashCostAndWin(chosenGameMode, slotValues);
@@ -110,7 +111,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// <summary>
         /// Check if the 3 values in second row has the same elements
         /// </summary>
-        /// <param name="slotValues">Is the randomly generated slotValues 2D array</param>
+        /// <param name="slotValues">Is an array with randomly generated elements</param>
         /// <returns>Winnings and costs of round</returns> 
         public static double ChangeInCashCent(string[,] slotValues)
         {
@@ -125,7 +126,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// <summary>
         /// Checks if the 3 values in any of the rows has the same elements
         /// </summary>
-        /// <param name="slotValues">Is the randomly generated slotValues 2D array</param>
+        /// <param name="slotValues">Is an array with randomly generated elements</param>
         /// <returns>Winnings and costs of round</returns> 
         public static double ChangeInCashHori(string[,] slotValues)
         {
@@ -145,7 +146,7 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// <summary>
         /// Check if the 3 values in any of the columns has the same elements
         /// </summary>
-        /// <param name="slotValues">Is the randomly generated slotValues 2D array</param>
+        /// <param name="slotValues">Is an array with randomly generated elements</param>
         /// <returns>Winnings and costs of round</returns> 
         public static double ChangeInCashVertiDiag(string[,] slotValues)
         {
@@ -176,8 +177,8 @@ namespace Csharp_Slot_machine // Note: actual namespace depends on the project n
         /// <summary>
         /// Takes in a gamemode, and executes the method that handles the winnings and loses related to that gamemode
         /// </summary>
-        /// <param name="chosenGameMode"></param>
-        /// <param name="slotValues"></param>
+        /// <param name="chosenGameMode">The gamemode for the round, chosen by the user</param>
+        /// <param name="slotValues">Is an array with randomly generated elements</param>
         /// <returns>The combined cost and winnings of the round</returns> 
         public static double CashCostAndWin(GameModes chosenGameMode, string[,] slotValues)
         {

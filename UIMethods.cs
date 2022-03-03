@@ -78,7 +78,7 @@ namespace Csharp_Slot_machine
         /// <summary>
         /// Writes a statement of how much money user has left
         /// </summary>
-        /// <param name="cash"></param>
+        /// <param name="cash">the user input in string format</param>
         public static void CashAmount(double cash)
         {
             Console.Write($"You have {cash:0.##} $");
@@ -93,7 +93,7 @@ namespace Csharp_Slot_machine
         /// <summary>
         /// takes in readkey from user, and only if user presses enter, then it returns true
         /// </summary>
-        /// <returns></returns>
+        /// <returns> true if user pressed enter</returns>
         public static bool PlayAgain()
         {
             Console.WriteLine("Press <Enter> to continue, otherwise you will cash out");
@@ -107,7 +107,7 @@ namespace Csharp_Slot_machine
         /// <summary>
         /// Iterates through each element in array
         /// </summary>
-        /// <param name="slotValues"></param>
+        /// <param name="slotValues">Is an array with randomly generated elements</param>
         /// <returns>Prints each row on a new line</returns> 
         public static void ShowArray(string[,] slotValues)
         {
